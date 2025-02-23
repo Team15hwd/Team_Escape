@@ -148,7 +148,6 @@ public class CharacterController2D : MonoBehaviour
         if (capsuleCast)
         {
             isBlocked = true;
-            Debug.Log("123123");
         }
     }
 
