@@ -51,7 +51,7 @@ public class Player : MonoBehaviour, UserInput.IPlayer1Actions, UserInput.IPlaye
 
         controller.Move(new Vector2(inputVector.x, 0f) * moveSpeed);
 
-        if (context.started && inputVector.y > 0f)
+        if (controller.IsGrounded && inputVector.y > 0f)
         {
             controller.Jump(jumpPower);
         }
