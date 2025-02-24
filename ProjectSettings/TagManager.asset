@@ -11,15 +11,15 @@ TagManager:
   - 
   - Water
   - UI
+  - Player1
+  - Player2
+  - Player1Collision
+  - Player2Collision
+  - Collision
+  - Trigger
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - IgnoreCollision
   - 
   - 
   - 
