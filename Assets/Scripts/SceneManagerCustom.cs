@@ -7,7 +7,7 @@ public class SceneManagerCustom : Singleton<SceneManagerCustom>
 {
     public async UniTask LoadSceneAsync(string sceneName)
     {
-        Debug.Log($"[SceneManager] {sceneName} ¾À ·Îµå ½ÃÀÛ");
+        Debug.Log($"[SceneManager] {sceneName} ï¿½ï¿½ ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½");
 
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
         while (!asyncOperation.isDone)
@@ -15,6 +15,6 @@ public class SceneManagerCustom : Singleton<SceneManagerCustom>
             await UniTask.Yield();
         }
 
-        Debug.Log($"[SceneManager] {sceneName} ¾À ·Îµå ¿Ï·á");
+        Debug.Log($"[SceneManager] {sceneName} ï¿½ï¿½ ï¿½Îµï¿½ ï¿½Ï·ï¿½");
     }
 }
