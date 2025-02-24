@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class CharacterController2D : MonoBehaviour
 {
+    //Scriptable Object로 설정 저장 가능하게 바꾸기
     [Header("Controller Setting")]
     [SerializeField] private float accel = 50f;
     [SerializeField] private float skinWidth = 0.01f;
@@ -25,6 +26,8 @@ public class CharacterController2D : MonoBehaviour
     public Vector2 inputVelocity = Vector2.zero;
 
     private Vector2 groundNormal = Vector2.up;
+    private Vector2 blockNormal = Vector2.zero;
+
     private float gravityCache = float.MaxValue;
     private int myLayerCache;
 
@@ -51,10 +54,11 @@ public class CharacterController2D : MonoBehaviour
 
         if (isOutOfControl)
         {
+            //string값을 const or layermask 로 수정
             gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
             rid.velocity = Vector2.zero;
-            rid.gravityScale = 0f;
             verticalVelocity = Vector2.zero;
+            rid.gravityScale = 0f;
         }
         else
         {
@@ -113,7 +117,7 @@ public class CharacterController2D : MonoBehaviour
 
     public void Jump(float jumpPower)
     {
-        if (canJump)
+        if (canJump && isGrounded)
         {
             canJump = false;
 
@@ -201,6 +205,8 @@ public class CharacterController2D : MonoBehaviour
     {
         Debug.DrawLine(transform.position, transform.position + (Vector3)rid.velocity);
 
+        rid.gravityScale = gravityCache;
+
         if (isGrounded && !isSloped)
         {
             rid.velocity = new Vector2(inputVelocity.x, 0f);
@@ -214,28 +220,23 @@ public class CharacterController2D : MonoBehaviour
         }
         else if (isSteepSloped)
         {
-            rid.gravityScale = gravityCache;
             rid.velocity = ProjectiOnPlane(rid.velocity, groundNormal);
         }
         else if (isBlocked && !isGrounded)
         {
-            rid.gravityScale = gravityCache;
             rid.velocity = new Vector2(0f, rid.velocity.y);
         }
         else
         {
             rid.velocity = new Vector2(inputVelocity.x, rid.velocity.y);
-            rid.gravityScale = gravityCache;
         }
+
+        rid.velocity = rid.velocity + externalVelocity;
 
         //jumped 임시코드
         if (verticalVelocity.y > 0f)
         {
             rid.velocity = new Vector2(rid.velocity.x + externalVelocity.x, verticalVelocity.y);
-        }
-        else
-        {
-            rid.velocity = rid.velocity + externalVelocity;
         }
 
         externalVelocity = Vector2.zero;

@@ -37,7 +37,7 @@ public class Potal : MonoBehaviour
             timer.Reset();
             timer.Start(false);
 
-            int idx = triggerCollisions.FindIndex(x => x = col);
+            int idx = triggerCollisions.FindIndex(x => x == col);
 
             idx = idx > 0 ? 0 : 1;
 
