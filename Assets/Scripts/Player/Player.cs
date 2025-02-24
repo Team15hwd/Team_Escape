@@ -83,3 +83,12 @@ public enum PlayerTribe
     Human, //1P
     Alien //2P
 }
+
+public enum PlayerState
+{
+    Idle,
+    Move,
+    Jump,
+    Ladder,
+    Die
+}

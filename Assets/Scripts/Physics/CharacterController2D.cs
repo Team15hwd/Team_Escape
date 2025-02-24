@@ -249,7 +249,7 @@ public class CharacterController2D : MonoBehaviour
         }
         else //공중에 떠 있을 때
         {
-            rid.velocity = new Vector2(0f, rid.velocity.y);
+            rid.velocity = new Vector2(horizontalVelocity.x, rid.velocity.y);
         }
 
         rid.velocity = rid.velocity + externalVelocity;
