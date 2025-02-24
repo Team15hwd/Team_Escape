@@ -7,11 +7,13 @@ using UnityEngine;
 
 public class CharacterController2D : MonoBehaviour
 {
+    //Scriptable Object로 설정 저장 가능하게 바꾸기
     [Header("Controller Setting")]
     [SerializeField] private float accel = 50f;
     [SerializeField] private float skinWidth = 0.01f;
     [SerializeField] private LayerMask targetLayers;
     [SerializeField] private float detectingDistance = 1f;
+    [SerializeField] private float jumpTickDelay = 1f;
 
     [Header("Slope")]
     [SerializeField][Range(0f, 89f)] private float maxSlope = 60f;
@@ -25,6 +27,8 @@ public class CharacterController2D : MonoBehaviour
     public Vector2 inputVelocity = Vector2.zero;
 
     private Vector2 groundNormal = Vector2.up;
+    private Vector2 blockNormal = Vector2.zero;
+
     private float gravityCache = float.MaxValue;
     private int myLayerCache;
 
@@ -44,6 +48,8 @@ public class CharacterController2D : MonoBehaviour
 
     public bool canJump = true;
 
+    private CountdownTimer jumpTickTimer = new();
+
     [ContextMenu("Out Controller")]
     public void UseOutOfControl()
     {
@@ -51,10 +57,11 @@ public class CharacterController2D : MonoBehaviour
 
         if (isOutOfControl)
         {
+            //string값을 const or layermask 로 수정
             gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
             rid.velocity = Vector2.zero;
-            rid.gravityScale = 0f;
             verticalVelocity = Vector2.zero;
+            rid.gravityScale = 0f;
         }
         else
         {
@@ -71,6 +78,9 @@ public class CharacterController2D : MonoBehaviour
         rid.bodyType = RigidbodyType2D.Dynamic;
         gravityCache = rid.gravityScale;
         myLayerCache = gameObject.layer;
+
+        jumpTickTimer.Reset(jumpTickDelay);
+        jumpTickTimer.OnTimerStop += () => canJump = true;
     }
 
     void FixedUpdate()
@@ -115,10 +125,12 @@ public class CharacterController2D : MonoBehaviour
     {
         if (canJump)
         {
-            canJump = false;
-
             if (!isOutOfControl)
             {
+                canJump = false;
+                jumpTickTimer.Start(false);
+
+                float jumpForce = Mathf.Sqrt(Mathf.Max(0, jumpPower * jumpPower - rid.velocity.x * rid.velocity.x));
                 verticalVelocity.y = jumpPower;
             }
         }
@@ -176,30 +188,40 @@ public class CharacterController2D : MonoBehaviour
     private void UpdateBlocking()
     {
         isBlocked = false;
+        blockNormal = Vector2.zero;
 
         var sign = Mathf.Sign(horizontalVelocity.x);
 
         //상수값으로 변경
-        var capsuleCast = Physics2D.CapsuleCast(transform.position, col.bounds.size * (Vector2)transform.localScale, col.direction, 0f, Vector2.right,
+        var capsuleCast = Physics2D.CapsuleCast(transform.position, col.bounds.size * (Vector2)transform.localScale, col.direction, 0f, Vector2.right * sign,
             skinWidth + 0.01f, targetLayers);
 
         if (capsuleCast)
         {
             isBlocked = true;
+
+            var hit = Physics2D.Raycast(new Vector2(transform.position.x, capsuleCast.point.y), Vector2.right * sign, skinWidth + 0.01f, targetLayers);
+
+            if (hit)
+            {
+                blockNormal = capsuleCast.normal;
+            }
         }
 
-        capsuleCast = Physics2D.CapsuleCast(transform.position, col.bounds.size * (Vector2)transform.localScale, col.direction, 0f, -Vector2.right,
-            skinWidth + 0.01f, targetLayers);
+        //capsuleCast = Physics2D.CapsuleCast(transform.position, col.bounds.size * (Vector2)transform.localScale, col.direction, 0f, -Vector2.right,
+        //    skinWidth + 0.01f, targetLayers);
 
-        if (capsuleCast)
-        {
-            isBlocked = true;
-        }
+        //if (capsuleCast)
+        //{
+        //    isBlocked = true;
+        //}
     }
 
     private void UpdateVelocity()
     {
         Debug.DrawLine(transform.position, transform.position + (Vector3)rid.velocity);
+
+        rid.gravityScale = gravityCache;
 
         if (isGrounded && !isSloped)
         {
@@ -214,33 +236,34 @@ public class CharacterController2D : MonoBehaviour
         }
         else if (isSteepSloped)
         {
-            rid.gravityScale = gravityCache;
             rid.velocity = ProjectiOnPlane(rid.velocity, groundNormal);
         }
         else if (isBlocked && !isGrounded)
         {
-            rid.gravityScale = gravityCache;
-            rid.velocity = new Vector2(0f, rid.velocity.y);
+            if (blockNormal != Vector2.zero)
+            {
+                var projection = ProjectiOnPlane(horizontalVelocity, blockNormal);
+
+                rid.velocity = new Vector2(projection.x, rid.velocity.y);
+            }
         }
-        else
+        else //공중에 떠 있을 때
         {
-            rid.velocity = new Vector2(inputVelocity.x, rid.velocity.y);
-            rid.gravityScale = gravityCache;
+            rid.velocity = new Vector2(horizontalVelocity.x, rid.velocity.y);
         }
+
+        rid.velocity = rid.velocity + externalVelocity;
 
         //jumped 임시코드
         if (verticalVelocity.y > 0f)
         {
             rid.velocity = new Vector2(rid.velocity.x + externalVelocity.x, verticalVelocity.y);
-        }
-        else
-        {
-            rid.velocity = rid.velocity + externalVelocity;
+
+            Debug.Log(rid.velocity.y);
         }
 
         externalVelocity = Vector2.zero;
         verticalVelocity = Vector2.zero;
-        //rid.velocity = rid.velocity + externalVelocity + verticalVelocity;
     }
 
     private Vector2 ProjectiOnPlane(Vector2 vel, Vector2 normal)
