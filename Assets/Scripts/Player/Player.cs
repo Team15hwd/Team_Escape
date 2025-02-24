@@ -31,6 +31,18 @@ public class Player : MonoBehaviour, UserInput.IPlayer1Actions, UserInput.IPlaye
         input.Disable();
     }
 
+    void Update()
+    {
+        if (tribe == PlayerTribe.Human)
+        {
+            controller.Move(input.Player1.Move.ReadValue<Vector2>() * moveSpeed);
+        }
+        else
+        {
+            controller.Move(input.Player2.Move.ReadValue<Vector2>() * moveSpeed);
+        }
+    }
+
     private void InitInputActions()
     {
         input = new();
@@ -49,7 +61,7 @@ public class Player : MonoBehaviour, UserInput.IPlayer1Actions, UserInput.IPlaye
     {
         Vector2 inputVector = context.ReadValue<Vector2>();
 
-        controller.Move(new Vector2(inputVector.x, 0f) * moveSpeed);
+        //controller.Move(inputVector * moveSpeed);
 
         if (controller.IsGrounded && inputVector.y > 0f)
         {

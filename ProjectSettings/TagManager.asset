@@ -16,7 +16,7 @@ TagManager:
   - Player1Collision
   - Player2Collision
   - Collision
-  - 
+  - Trigger
   - 
   - 
   - IgnoreCollision

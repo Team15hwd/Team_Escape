@@ -49,7 +49,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 50
-  m_LinearDrag: 0
+  m_LinearDrag: 0.1
   m_AngularDrag: 0.05
   m_GravityScale: 5
   m_Material: {fileID: 0}
@@ -118,6 +118,8 @@ MonoBehaviour:
   detectingDistance: 1
   maxSlope: 60
   externalVelocity: {x: 0, y: 0}
+  inputVelocity: {x: 0, y: 0}
+  canJump: 1
 --- !u!114 &6625902846072533715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tribe: 0
-  moveSpeed: 12
+  moveSpeed: 6
   jumpPower: 20
 --- !u!1 &9095054487477678460
 GameObject:
@@ -206,7 +208,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: b38ffadc4dce8664da2aadf73ee58590, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

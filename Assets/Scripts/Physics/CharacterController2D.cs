@@ -22,6 +22,7 @@ public class CharacterController2D : MonoBehaviour
     private Vector2 horizontalVelocity = Vector2.zero;
     private Vector2 verticalVelocity = Vector2.zero;
     public Vector2 externalVelocity = Vector2.zero;
+    public Vector2 inputVelocity = Vector2.zero;
 
     private Vector2 groundNormal = Vector2.up;
     private float gravityCache = float.MaxValue;
@@ -40,7 +41,8 @@ public class CharacterController2D : MonoBehaviour
     public bool IsSteepSloped => isSteepSloped;
     public bool IsBlocked => isBlocked;
     public bool IsOutOfControl => isOutOfControl;
-    public bool IsOutOfPhysics => isOutOfPhysics;
+
+    public bool canJump = true;
 
     [ContextMenu("Out Controller")]
     public void UseOutOfControl()
@@ -50,17 +52,15 @@ public class CharacterController2D : MonoBehaviour
         if (isOutOfControl)
         {
             gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
-
+            rid.velocity = Vector2.zero;
+            rid.gravityScale = 0f;
+            verticalVelocity = Vector2.zero;
         }
         else
         {
             gameObject.layer = myLayerCache;
+            rid.gravityScale = gravityCache;
         }
-    }
-
-    public void UseOutOfPhysics()
-    {
-        isOutOfPhysics = !isOutOfPhysics;
     }
 
     void Awake()
@@ -75,41 +75,70 @@ public class CharacterController2D : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (isOutOfControl)
+        {
+            rid.velocity = externalVelocity;
+            return;
+        }
+
         UpdateGrouning();
         UpdateBlocking();
         UpdateVelocity();
     }
 
-    void Update()
+    //player 클래스로 옮기기
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (collision.TryGetComponent(out TriggerController tc))
         {
-            Physics2D.queriesStartInColliders = this;
+            tc.TriggerEnter(this);
         }
     }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out TriggerController tc))
+        {
+            tc.TriggerExit(this);
+        }
+    }
+    //
 
     public void Move(Vector2 movePos)
     {
         horizontalVelocity.x = movePos.x;
+
+        inputVelocity = movePos;
     }
 
     public void Jump(float jumpPower)
     {
-        verticalVelocity.y = jumpPower;
+        if (canJump)
+        {
+            canJump = false;
+
+            if (!isOutOfControl)
+            {
+                verticalVelocity.y = jumpPower;
+            }
+        }
     }
 
     private void UpdateGrouning()
     {
-        isGrounded = isSloped = isSteepSloped = false;
-        groundNormal = Vector2.up;
+        isGrounded = false;
+        isSteepSloped = false;
+        isSloped = false;
+
+        groundNormal = Vector2.down;
 
         var capsuleHeight = col.size.y * 0.5f;
         var capsuleRadius = col.size.x * 0.5f;
-        var castOrigin = rid.position + (Vector2.down * capsuleHeight) + (Vector2.up * (capsuleRadius));
-        var size = new Vector2(col.size.x - skinWidth, col.size.x);
+        var castOrigin = (Vector2)transform.position + (Vector2.down * capsuleHeight) + (Vector2.up * (capsuleRadius));
+        var size = new Vector2(col.size.x - skinWidth, col.size.x) * transform.localScale;
 
         //0.05 상수값으로 수정;
-        var capsuleCast = Physics2D.CapsuleCast(castOrigin, size, col.direction, 0f, Vector2.down, skinWidth + 0.05f, targetLayers);
+        var capsuleCast = Physics2D.CapsuleCast(castOrigin, size, col.direction, 0f, Vector2.down, skinWidth + 0.1f, targetLayers);
 
         if (capsuleCast)
         {
@@ -131,7 +160,16 @@ public class CharacterController2D : MonoBehaviour
                         isSteepSloped = true;
                     }
                 }
+                else
+                {
+                    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                }
             }
+        }
+
+        if (rid.velocity.y <= 0f)
+        {
+            canJump = true;
         }
     }
 
@@ -142,7 +180,15 @@ public class CharacterController2D : MonoBehaviour
         var sign = Mathf.Sign(horizontalVelocity.x);
 
         //상수값으로 변경
-        var capsuleCast = Physics2D.CapsuleCast(rid.position, col.bounds.size, col.direction, 0f, (Vector2.right * sign).normalized,
+        var capsuleCast = Physics2D.CapsuleCast(transform.position, col.bounds.size * (Vector2)transform.localScale, col.direction, 0f, Vector2.right,
+            skinWidth + 0.01f, targetLayers);
+
+        if (capsuleCast)
+        {
+            isBlocked = true;
+        }
+
+        capsuleCast = Physics2D.CapsuleCast(transform.position, col.bounds.size * (Vector2)transform.localScale, col.direction, 0f, -Vector2.right,
             skinWidth + 0.01f, targetLayers);
 
         if (capsuleCast)
@@ -155,36 +201,46 @@ public class CharacterController2D : MonoBehaviour
     {
         Debug.DrawLine(transform.position, transform.position + (Vector3)rid.velocity);
 
-        if (isOutOfControl)
+        if (isGrounded && !isSloped)
         {
-            rid.velocity = Vector2.zero;
-            rid.gravityScale = 0f;
-        }
-        else if (isBlocked && !isGrounded)
-        {
-            rid.gravityScale = gravityCache;
-            rid.velocity = new Vector2(0f, rid.velocity.y) + verticalVelocity;
+            rid.velocity = new Vector2(inputVelocity.x, 0f);
         }
         else if (isSloped && !isSteepSloped)
         {
-            rid.velocity = ProjectiOnPlane(horizontalVelocity, groundNormal) + verticalVelocity;
+            var projection = ProjectiOnPlane(inputVelocity, groundNormal);
+            rid.velocity = projection;
+
             rid.gravityScale = 0f;
         }
         else if (isSteepSloped)
         {
             rid.gravityScale = gravityCache;
-            rid.velocity = ProjectiOnPlane(rid.velocity, groundNormal) + verticalVelocity;
+            rid.velocity = ProjectiOnPlane(rid.velocity, groundNormal);
+        }
+        else if (isBlocked && !isGrounded)
+        {
+            rid.gravityScale = gravityCache;
+            rid.velocity = new Vector2(0f, rid.velocity.y);
         }
         else
         {
+            rid.velocity = new Vector2(inputVelocity.x, rid.velocity.y);
             rid.gravityScale = gravityCache;
-            rid.velocity = new Vector2(horizontalVelocity.x, rid.velocity.y) + verticalVelocity;
         }
 
-        rid.velocity = rid.velocity + externalVelocity;
+        //jumped 임시코드
+        if (verticalVelocity.y > 0f)
+        {
+            rid.velocity = new Vector2(rid.velocity.x + externalVelocity.x, verticalVelocity.y);
+        }
+        else
+        {
+            rid.velocity = rid.velocity + externalVelocity;
+        }
 
         externalVelocity = Vector2.zero;
         verticalVelocity = Vector2.zero;
+        //rid.velocity = rid.velocity + externalVelocity + verticalVelocity;
     }
 
     private Vector2 ProjectiOnPlane(Vector2 vel, Vector2 normal)
