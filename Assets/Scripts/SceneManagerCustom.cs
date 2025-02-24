@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneCustomManager : Singleton<SceneCustomManager>
+public class SceneManagerCustom : Singleton<SceneManagerCustom>
 {
     public async UniTask LoadSceneAsync(string sceneName)
     {
