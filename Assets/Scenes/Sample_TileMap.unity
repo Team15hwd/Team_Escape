@@ -3989,6 +3989,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4408072459406195515, guid: 1d563d2efef789b4cb6ab6bb7b97c394, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.23
+      objectReference: {fileID: 0}
     - target: {fileID: 8982845822695691431, guid: 1d563d2efef789b4cb6ab6bb7b97c394, type: 3}
       propertyPath: m_Name
       value: PotalTest

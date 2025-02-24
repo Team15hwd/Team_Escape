@@ -180,25 +180,33 @@ public class CharacterController2D : MonoBehaviour
     private void UpdateBlocking()
     {
         isBlocked = false;
+        blockNormal = Vector2.zero;
 
         var sign = Mathf.Sign(horizontalVelocity.x);
 
         //상수값으로 변경
-        var capsuleCast = Physics2D.CapsuleCast(transform.position, col.bounds.size * (Vector2)transform.localScale, col.direction, 0f, Vector2.right,
+        var capsuleCast = Physics2D.CapsuleCast(transform.position, col.bounds.size * (Vector2)transform.localScale, col.direction, 0f, Vector2.right * sign,
             skinWidth + 0.01f, targetLayers);
 
         if (capsuleCast)
         {
             isBlocked = true;
+
+            var hit = Physics2D.Raycast(new Vector2(transform.position.x, capsuleCast.point.y), Vector2.right * sign, skinWidth + 0.01f, targetLayers);
+
+            if (hit)
+            {
+                blockNormal = capsuleCast.normal;
+            }
         }
 
-        capsuleCast = Physics2D.CapsuleCast(transform.position, col.bounds.size * (Vector2)transform.localScale, col.direction, 0f, -Vector2.right,
-            skinWidth + 0.01f, targetLayers);
+        //capsuleCast = Physics2D.CapsuleCast(transform.position, col.bounds.size * (Vector2)transform.localScale, col.direction, 0f, -Vector2.right,
+        //    skinWidth + 0.01f, targetLayers);
 
-        if (capsuleCast)
-        {
-            isBlocked = true;
-        }
+        //if (capsuleCast)
+        //{
+        //    isBlocked = true;
+        //}
     }
 
     private void UpdateVelocity()
@@ -224,7 +232,12 @@ public class CharacterController2D : MonoBehaviour
         }
         else if (isBlocked && !isGrounded)
         {
-            rid.velocity = new Vector2(0f, rid.velocity.y);
+            if (blockNormal != Vector2.zero)
+            {
+                var projection = ProjectiOnPlane(horizontalVelocity, blockNormal);
+
+                rid.velocity = new Vector2(projection.x, rid.velocity.y);
+            }
         }
         else
         {
@@ -241,7 +254,6 @@ public class CharacterController2D : MonoBehaviour
 
         externalVelocity = Vector2.zero;
         verticalVelocity = Vector2.zero;
-        //rid.velocity = rid.velocity + externalVelocity + verticalVelocity;
     }
 
     private Vector2 ProjectiOnPlane(Vector2 vel, Vector2 normal)
