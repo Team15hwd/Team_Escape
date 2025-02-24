@@ -47,6 +47,7 @@ public class Player : MonoBehaviour, UserInput.IPlayer1Actions, UserInput.IPlaye
     {
         input = new();
 
+
         if (tribe == PlayerTribe.Human)
         {
             input.Player1.SetCallbacks(this);
@@ -63,9 +64,14 @@ public class Player : MonoBehaviour, UserInput.IPlayer1Actions, UserInput.IPlaye
 
         //controller.Move(inputVector * moveSpeed);
 
-        if (controller.IsGrounded && inputVector.y > 0f)
+        if (context.phase == InputActionPhase.Performed)
         {
-            controller.Jump(jumpPower);
+            if (controller.IsGrounded && inputVector.y > 0f)
+            {
+                controller.Jump(jumpPower);
+
+                Debug.Log("¤·¤· Á¡ÇÁ");
+            }
         }
     }
 }

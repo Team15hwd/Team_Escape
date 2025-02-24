@@ -13,6 +13,7 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private float skinWidth = 0.01f;
     [SerializeField] private LayerMask targetLayers;
     [SerializeField] private float detectingDistance = 1f;
+    [SerializeField] private float jumpTickDelay = 1f;
 
     [Header("Slope")]
     [SerializeField][Range(0f, 89f)] private float maxSlope = 60f;
@@ -47,6 +48,8 @@ public class CharacterController2D : MonoBehaviour
 
     public bool canJump = true;
 
+    private CountdownTimer jumpTickTimer = new();
+
     [ContextMenu("Out Controller")]
     public void UseOutOfControl()
     {
@@ -75,6 +78,9 @@ public class CharacterController2D : MonoBehaviour
         rid.bodyType = RigidbodyType2D.Dynamic;
         gravityCache = rid.gravityScale;
         myLayerCache = gameObject.layer;
+
+        jumpTickTimer.Reset(jumpTickDelay);
+        jumpTickTimer.OnTimerStop += () => canJump = true;
     }
 
     void FixedUpdate()
@@ -117,12 +123,14 @@ public class CharacterController2D : MonoBehaviour
 
     public void Jump(float jumpPower)
     {
-        if (canJump && isGrounded)
+        if (canJump)
         {
-            canJump = false;
-
             if (!isOutOfControl)
             {
+                canJump = false;
+                jumpTickTimer.Start(false);
+
+                float jumpForce = Mathf.Sqrt(Mathf.Max(0, jumpPower * jumpPower - rid.velocity.x * rid.velocity.x));
                 verticalVelocity.y = jumpPower;
             }
         }
@@ -239,9 +247,9 @@ public class CharacterController2D : MonoBehaviour
                 rid.velocity = new Vector2(projection.x, rid.velocity.y);
             }
         }
-        else
+        else //공중에 떠 있을 때
         {
-            rid.velocity = new Vector2(inputVelocity.x, rid.velocity.y);
+            rid.velocity = new Vector2(0f, rid.velocity.y);
         }
 
         rid.velocity = rid.velocity + externalVelocity;
@@ -250,6 +258,8 @@ public class CharacterController2D : MonoBehaviour
         if (verticalVelocity.y > 0f)
         {
             rid.velocity = new Vector2(rid.velocity.x + externalVelocity.x, verticalVelocity.y);
+
+            Debug.Log(rid.velocity.y);
         }
 
         externalVelocity = Vector2.zero;

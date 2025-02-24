@@ -40,6 +40,11 @@ public class CountdownTimer : Timer
         internalTime = time;
     }
 
+    public CountdownTimer()
+    {
+
+    }
+
     public override void Start(bool ignoreTimeScale = true)
     {
         StartAsync(ignoreTimeScale).Forget();
