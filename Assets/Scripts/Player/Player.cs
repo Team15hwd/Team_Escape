@@ -10,17 +10,32 @@ public class Player : MonoBehaviour, UserInput.IPlayer1Actions, UserInput.IPlaye
     [SerializeField] private float jumpPower;
     [Header("SFX")]
     [SerializeField] private SoundData jumpSFX;
+    
 
     private UserInput input;
     private CharacterController2D controller;
+    private Animator animator;
+    private SpriteRenderer sprRenderer;
 
-    public PlayerTribe Tribe => tribe;
+    private PlayerState playerState;
+    public PlayerState PlayerState
+    {
+        get { return playerState; }
+        set
+        {
+            playerState = value;
+            //해시로 바꾸기
+            animator.SetInteger("StateID", (int)value);
+        }
+    }
 
     void Awake()
     {
         InitInputActions();
 
         controller= GetComponent<CharacterController2D>();
+        animator = transform.GetChild(0).GetComponent<Animator>();
+        sprRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
 
     void OnEnable()
@@ -43,6 +58,29 @@ public class Player : MonoBehaviour, UserInput.IPlayer1Actions, UserInput.IPlaye
         {
             controller.Move(input.Player2.Move.ReadValue<Vector2>() * moveSpeed);
         }
+
+        StateControl();
+    }
+
+    private void StateControl()
+    {
+        if (!controller.IsGrounded)
+        {
+            PlayerState = PlayerState.Jump;
+        }
+        else if (controller.inputVelocity.x != 0)
+        {
+            PlayerState = PlayerState.Move;
+        }
+        else
+        {
+            PlayerState = PlayerState.Idle;
+        }
+
+        if (controller.inputVelocity.x != 0)
+        {
+            sprRenderer.flipX = controller.inputVelocity.x < 0 ? true : false;
+        }
     }
 
     private void InitInputActions()
@@ -64,8 +102,6 @@ public class Player : MonoBehaviour, UserInput.IPlayer1Actions, UserInput.IPlaye
     {
         Vector2 inputVector = context.ReadValue<Vector2>();
 
-        //controller.Move(inputVector * moveSpeed);
-
         if (context.phase == InputActionPhase.Performed)
         {
             if (controller.IsGrounded && inputVector.y > 0f)
@@ -77,7 +113,6 @@ public class Player : MonoBehaviour, UserInput.IPlayer1Actions, UserInput.IPlaye
         }
     }
 }
-
 
 
 public enum PlayerTribe
