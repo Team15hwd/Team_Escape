@@ -7,12 +7,9 @@ using UnityEngine;
 
 public class CharacterController2D : MonoBehaviour
 {
-    //Scriptable Object로 설정 저장 가능하게 바꾸기
     [Header("Controller Setting")]
-    [SerializeField] private float accel = 50f;
     [SerializeField] private float skinWidth = 0.01f;
     [SerializeField] private LayerMask targetLayers;
-    [SerializeField] private float detectingDistance = 1f;
     [SerializeField] private float jumpTickDelay = 1f;
 
     [Header("Slope")]
@@ -136,13 +133,14 @@ public class CharacterController2D : MonoBehaviour
         }
     }
 
+    //아래로 캐스트를 쏴서 지면 정보 검출 지면 정보를 통해 상태 플래그 변경
     private void UpdateGrouning()
     {
         isGrounded = false;
         isSteepSloped = false;
         isSloped = false;
 
-        groundNormal = Vector2.down;
+        groundNormal = Vector2.up;
 
         var capsuleHeight = col.size.y * 0.5f;
         var capsuleRadius = col.size.x * 0.5f;
@@ -172,10 +170,6 @@ public class CharacterController2D : MonoBehaviour
                         isSteepSloped = true;
                     }
                 }
-                else
-                {
-                    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                }
             }
         }
 
@@ -185,6 +179,7 @@ public class CharacterController2D : MonoBehaviour
         }
     }
 
+    //벽면 정보 검출 isBlocked 상태 변경
     private void UpdateBlocking()
     {
         isBlocked = false;
@@ -207,16 +202,9 @@ public class CharacterController2D : MonoBehaviour
                 blockNormal = capsuleCast.normal;
             }
         }
-
-        //capsuleCast = Physics2D.CapsuleCast(transform.position, col.bounds.size * (Vector2)transform.localScale, col.direction, 0f, -Vector2.right,
-        //    skinWidth + 0.01f, targetLayers);
-
-        //if (capsuleCast)
-        //{
-        //    isBlocked = true;
-        //}
     }
 
+    //플래그와 지면 정보를 통해 rigidbody.velocity를 업데이트
     private void UpdateVelocity()
     {
         Debug.DrawLine(transform.position, transform.position + (Vector3)rid.velocity);
@@ -266,6 +254,12 @@ public class CharacterController2D : MonoBehaviour
         verticalVelocity = Vector2.zero;
     }
 
+    /// <summary>
+    /// 2D벡터를 normal값에 투영 (힘 유지)
+    /// </summary>
+    /// <param name="vel"></param>
+    /// <param name="normal"></param>
+    /// <returns></returns>
     private Vector2 ProjectiOnPlane(Vector2 vel, Vector2 normal)
     {
         var mag = vel.magnitude;
