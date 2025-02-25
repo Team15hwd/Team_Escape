@@ -8,6 +8,8 @@ public class Player : MonoBehaviour, UserInput.IPlayer1Actions, UserInput.IPlaye
     [SerializeField] private PlayerTribe tribe;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpPower;
+    [Header("SFX")]
+    [SerializeField] private SoundData jumpSFX;
 
     private UserInput input;
     private CharacterController2D controller;
@@ -70,7 +72,7 @@ public class Player : MonoBehaviour, UserInput.IPlayer1Actions, UserInput.IPlaye
             {
                 controller.Jump(jumpPower);
 
-                Debug.Log("¤·¤· Á¡ÇÁ");
+                SoundManager.Instance.Bulider().WidthSoundData(jumpSFX).Play();
             }
         }
     }
