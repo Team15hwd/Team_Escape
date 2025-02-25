@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
@@ -37,6 +38,7 @@ public class CharacterController2D : MonoBehaviour
     private bool isOutOfControl = false;
     private bool isOutOfPhysics = false;
 
+    public Vector2 Velocity => rid.velocity;
     public bool IsGrounded => isGrounded;
     public bool IsSloped => isSloped;
     public bool IsSteepSloped => isSteepSloped;
@@ -246,8 +248,6 @@ public class CharacterController2D : MonoBehaviour
         if (verticalVelocity.y > 0f)
         {
             rid.velocity = new Vector2(rid.velocity.x + externalVelocity.x, verticalVelocity.y);
-
-            Debug.Log(rid.velocity.y);
         }
 
         externalVelocity = Vector2.zero;

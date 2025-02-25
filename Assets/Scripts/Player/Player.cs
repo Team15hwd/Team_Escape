@@ -64,22 +64,25 @@ public class Player : MonoBehaviour, UserInput.IPlayer1Actions, UserInput.IPlaye
 
     private void StateControl()
     {
-        if (!controller.IsGrounded)
+        if (controller.IsGrounded)
         {
-            PlayerState = PlayerState.Jump;
-        }
-        else if (controller.inputVelocity.x != 0)
-        {
-            PlayerState = PlayerState.Move;
+            if (controller.Velocity.x != 0f)
+            {
+                PlayerState = PlayerState.Move;
+            }
+            else
+            {
+                PlayerState = PlayerState.Idle;
+            }
         }
         else
         {
-            PlayerState = PlayerState.Idle;
+            PlayerState = PlayerState.Jump;
         }
 
-        if (controller.inputVelocity.x != 0)
+        if (Mathf.Abs(controller.Velocity.x) > 0.1f)
         {
-            sprRenderer.flipX = controller.inputVelocity.x < 0 ? true : false;
+            sprRenderer.flipX = controller.Velocity.x < 0 ? true : false;
         }
     }
 
