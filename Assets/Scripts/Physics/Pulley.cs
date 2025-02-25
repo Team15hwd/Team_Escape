@@ -7,7 +7,7 @@ public class Pulley : MonoBehaviour
     public GameObject plat1;
     public GameObject plat2;
     
-    public float power = 1f;//ºí·°ÀÌ ³»·Á°¡´Â ¼Óµµ Á¶Àı
+    public float power = 1f;//ë¸”ëŸ­ì´ ë‚´ë ¤ê°€ëŠ” ì†ë„ ì¡°ì ˆ
 
     private void OnCollisionStay2D(Collision2D collision)
     {

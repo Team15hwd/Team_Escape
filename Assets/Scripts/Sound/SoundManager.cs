@@ -11,7 +11,7 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] private int maxPoolSize = 30;
     [SerializeField] private int maxSoundInstance = 5;
 
-    private Dictionary<SoundData, int> soundInstances = new();
+    public Dictionary<SoundData, int> soundInstances = new();
     private CustomObjectPool<SoundEmitter> emitterPool = new();
 
     public SoundBuilder Bulider() => new SoundBuilder(this);
@@ -54,6 +54,21 @@ public class SoundManager : Singleton<SoundManager>
     public void OnReturnToPool(SoundEmitter emitter)
     {
         emitter.gameObject.SetActive(false);
+
+        if (emitter == null || emitter.SoundData == null)
+            return;
+
+        if (soundInstances.TryGetValue(emitter.SoundData, out var count))
+        {
+            if (count > 1)
+            {
+                soundInstances[emitter.SoundData] -= 1;
+            }
+            else
+            {
+                soundInstances.Remove(emitter.SoundData);
+            }
+        }
     }
 
     public void OnDestroyPoolObject(SoundEmitter emitter)

@@ -10,7 +10,6 @@ public class SoundEmitter : MonoBehaviour
     public SoundData SoundData { get; set; }
 
     private AudioSource source;
-    private CancellationTokenSource cts;
 
     void Awake()
     {
@@ -29,44 +28,33 @@ public class SoundEmitter : MonoBehaviour
         source.pitch = data.pitch;
         source.volume = data.volume;
         source.panStereo = data.panStereo;
-        source.spatialBlend= data.spatialBlend;
-        source.reverbZoneMix= data.reverbZoneMix;
+        source.spatialBlend = data.spatialBlend;
+        source.reverbZoneMix = data.reverbZoneMix;
     }
 
     public void Play()
     {
-        if (cts != null)
-        {
-            cts.Cancel();
-        }
         source.Play();
         WaitForSoundToEnd().Forget();
+
+        if (SoundManager.Instance.soundInstances.TryGetValue(SoundData, out var count))
+        {
+            SoundManager.Instance.soundInstances[SoundData] += 1;
+        }
+        else
+        {
+            SoundManager.Instance.soundInstances[SoundData] = 1;
+        }
     }
 
     private async UniTask WaitForSoundToEnd()
     {
-        cts = new CancellationTokenSource();
-
-        try
-        {
-            await UniTask.WaitUntil(() => !source.isPlaying);
-            Stop();
-        }
-        catch (OperationCanceledException)
-        {
-
-        }
+        await UniTask.WaitUntil(() => !source.isPlaying);
+        Stop();
     }
 
     public void Stop()
     {
         SoundManager.Instance.ReturnToPool(this);
-    }
-
-    void OnDisable()
-    {
-        cts?.Cancel();
-        cts?.Dispose();
-        cts = null;
     }
 }
