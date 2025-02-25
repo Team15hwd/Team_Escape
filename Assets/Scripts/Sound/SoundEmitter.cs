@@ -49,7 +49,7 @@ public class SoundEmitter : MonoBehaviour
 
     private async UniTask WaitForSoundToEnd()
     {
-        await UniTask.WaitUntil(() => !source.isPlaying);
+        await UniTask.WaitUntil(() => source && !source.isPlaying);
         Stop();
     }
 

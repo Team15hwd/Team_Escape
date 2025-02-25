@@ -4069,7 +4069,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6625902846072533715, guid: cb56bb2a1b9ede6419688122a55fe352, type: 3}
       propertyPath: jumpSFX.loop
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6625902846072533715, guid: cb56bb2a1b9ede6419688122a55fe352, type: 3}
       propertyPath: jumpSFX.volume
@@ -4096,6 +4096,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 737874271980216814, guid: 5d008347392f77a49b5ac0be83082684, type: 3}
+      propertyPath: maxSoundInstance
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3057418798280595698, guid: 5d008347392f77a49b5ac0be83082684, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.2800739
