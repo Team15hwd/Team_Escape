@@ -5,6 +5,7 @@ using UnityEngine;
 public class DoorController : MonoBehaviour
 {
     [SerializeField] private SceneLoader sceneLoader;
+    [SerializeField] private Sprite doorOpenSprite;
 
     private TriggerCollision[] triggers = new TriggerCollision[2];
     private const int playerCount = 2;
@@ -20,6 +21,7 @@ public class DoorController : MonoBehaviour
             tr.OnTriggerEvent += (val, obj) =>
             {
                 triggerCount++;
+                tr.gameObject.GetComponent<SpriteRenderer>().sprite = doorOpenSprite;
 
                 if (triggerCount > 1)
                 {
