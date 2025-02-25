@@ -48,15 +48,6 @@ public class SoundManager : Singleton<SoundManager>
 
     private void OnTakeFromPool(SoundEmitter emitter)
     {
-        if (soundInstances.TryGetValue(emitter.SoundData, out var sound))
-        {
-            sound++;
-        }
-        else
-        {
-            soundInstances[emitter.SoundData] = 1;
-        }
-
         emitter.gameObject.SetActive(true);
     }
 

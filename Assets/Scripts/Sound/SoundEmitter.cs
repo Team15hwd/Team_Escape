@@ -62,4 +62,11 @@ public class SoundEmitter : MonoBehaviour
     {
         SoundManager.Instance.ReturnToPool(this);
     }
+
+    void OnDisable()
+    {
+        cts?.Cancel();
+        cts?.Dispose();
+        cts = null;
+    }
 }

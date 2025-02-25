@@ -31,17 +31,21 @@ public class SoundBuilder
 
     public void Play()
     {
+        var emitter = manager.Get();
+
+        if (emitter != null)
+        {
+            emitter.Initialize(soundData);
+            emitter.transform.position = position;
+        }
+
         if (manager.CanPlaySound(soundData))
         {
-            var emitter = manager.Get();
-
-            if (emitter != null)
-            {
-                emitter.Initialize(soundData);
-                emitter.transform.position = position;
-
-                emitter.Play();
-            }
+            emitter.Play();
+        }
+        else
+        {
+            emitter.Stop();
         }
     }
 }
