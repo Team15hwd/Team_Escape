@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Alien
-  - Human
+  - plat1
+  - plat2
   layers:
   - Default
   - TransparentFX

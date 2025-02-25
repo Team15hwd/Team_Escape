@@ -1,18 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
 
 public class CharacterController2D : MonoBehaviour
 {
-    //Scriptable Object·Î ¼³Á¤ ÀúÀå °¡´ÉÇÏ°Ô ¹Ù²Ù±â
     [Header("Controller Setting")]
-    [SerializeField] private float accel = 50f;
     [SerializeField] private float skinWidth = 0.01f;
     [SerializeField] private LayerMask targetLayers;
-    [SerializeField] private float detectingDistance = 1f;
     [SerializeField] private float jumpTickDelay = 1f;
 
     [Header("Slope")]
@@ -32,7 +30,7 @@ public class CharacterController2D : MonoBehaviour
     private float gravityCache = float.MaxValue;
     private int myLayerCache;
 
-    //Ä³¸¯ÅÍÀÇ »óÅÂ ÇÃ·¡±×
+    //ìºë¦­í„°ì˜ ìƒíƒœ í”Œë˜ê·¸
     private bool isGrounded;
     private bool isSloped;
     private bool isSteepSloped;
@@ -40,6 +38,7 @@ public class CharacterController2D : MonoBehaviour
     private bool isOutOfControl = false;
     private bool isOutOfPhysics = false;
 
+    public Vector2 Velocity => rid.velocity;
     public bool IsGrounded => isGrounded;
     public bool IsSloped => isSloped;
     public bool IsSteepSloped => isSteepSloped;
@@ -48,8 +47,6 @@ public class CharacterController2D : MonoBehaviour
 
     public bool canJump = true;
 
-    private CountdownTimer jumpTickTimer = new();
-
     [ContextMenu("Out Controller")]
     public void UseOutOfControl()
     {
@@ -57,7 +54,7 @@ public class CharacterController2D : MonoBehaviour
 
         if (isOutOfControl)
         {
-            //string°ªÀ» const or layermask ·Î ¼öÁ¤
+            //stringê°’ì„ const or layermask ë¡œ ìˆ˜ì •
             gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
             rid.velocity = Vector2.zero;
             verticalVelocity = Vector2.zero;
@@ -78,9 +75,6 @@ public class CharacterController2D : MonoBehaviour
         rid.bodyType = RigidbodyType2D.Dynamic;
         gravityCache = rid.gravityScale;
         myLayerCache = gameObject.layer;
-
-        jumpTickTimer.Reset(jumpTickDelay);
-        jumpTickTimer.OnTimerStop += () => canJump = true;
     }
 
     void FixedUpdate()
@@ -96,7 +90,7 @@ public class CharacterController2D : MonoBehaviour
         UpdateVelocity();
     }
 
-    //player Å¬·¡½º·Î ¿Å±â±â
+    //player í´ë˜ìŠ¤ë¡œ ì˜®ê¸°ê¸°
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out TriggerController tc))
@@ -117,7 +111,6 @@ public class CharacterController2D : MonoBehaviour
     public void Move(Vector2 movePos)
     {
         horizontalVelocity.x = movePos.x;
-
         inputVelocity = movePos;
     }
 
@@ -125,31 +118,30 @@ public class CharacterController2D : MonoBehaviour
     {
         if (canJump)
         {
+            canJump = false;
+
             if (!isOutOfControl)
             {
-                canJump = false;
-                jumpTickTimer.Start(false);
-
-                float jumpForce = Mathf.Sqrt(Mathf.Max(0, jumpPower * jumpPower - rid.velocity.x * rid.velocity.x));
                 verticalVelocity.y = jumpPower;
             }
         }
     }
 
+    //ì•„ë˜ë¡œ ìºìŠ¤íŠ¸ë¥¼ ì´ì„œ ì§€ë©´ ì •ë³´ ê²€ì¶œ ì§€ë©´ ì •ë³´ë¥¼ í†µí•´ ìƒíƒœ í”Œë˜ê·¸ ë³€ê²½
     private void UpdateGrouning()
     {
         isGrounded = false;
         isSteepSloped = false;
         isSloped = false;
 
-        groundNormal = Vector2.down;
+        groundNormal = Vector2.up;
 
         var capsuleHeight = col.size.y * 0.5f;
         var capsuleRadius = col.size.x * 0.5f;
         var castOrigin = (Vector2)transform.position + (Vector2.down * capsuleHeight) + (Vector2.up * (capsuleRadius));
         var size = new Vector2(col.size.x - skinWidth, col.size.x) * transform.localScale;
 
-        //0.05 »ó¼ö°ªÀ¸·Î ¼öÁ¤;
+        //0.05 ìƒìˆ˜ê°’ìœ¼ë¡œ ìˆ˜ì •;
         var capsuleCast = Physics2D.CapsuleCast(castOrigin, size, col.direction, 0f, Vector2.down, skinWidth + 0.1f, targetLayers);
 
         if (capsuleCast)
@@ -172,10 +164,6 @@ public class CharacterController2D : MonoBehaviour
                         isSteepSloped = true;
                     }
                 }
-                else
-                {
-                    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                }
             }
         }
 
@@ -185,6 +173,7 @@ public class CharacterController2D : MonoBehaviour
         }
     }
 
+    //ë²½ë©´ ì •ë³´ ê²€ì¶œ isBlocked ìƒíƒœ ë³€ê²½
     private void UpdateBlocking()
     {
         isBlocked = false;
@@ -192,7 +181,7 @@ public class CharacterController2D : MonoBehaviour
 
         var sign = Mathf.Sign(horizontalVelocity.x);
 
-        //»ó¼ö°ªÀ¸·Î º¯°æ
+        //ìƒìˆ˜ê°’ìœ¼ë¡œ ë³€ê²½
         var capsuleCast = Physics2D.CapsuleCast(transform.position, col.bounds.size * (Vector2)transform.localScale, col.direction, 0f, Vector2.right * sign,
             skinWidth + 0.01f, targetLayers);
 
@@ -207,16 +196,9 @@ public class CharacterController2D : MonoBehaviour
                 blockNormal = capsuleCast.normal;
             }
         }
-
-        //capsuleCast = Physics2D.CapsuleCast(transform.position, col.bounds.size * (Vector2)transform.localScale, col.direction, 0f, -Vector2.right,
-        //    skinWidth + 0.01f, targetLayers);
-
-        //if (capsuleCast)
-        //{
-        //    isBlocked = true;
-        //}
     }
 
+    //í”Œë˜ê·¸ì™€ ì§€ë©´ ì •ë³´ë¥¼ í†µí•´ rigidbody.velocityë¥¼ ì—…ë°ì´íŠ¸
     private void UpdateVelocity()
     {
         Debug.DrawLine(transform.position, transform.position + (Vector3)rid.velocity);
@@ -247,25 +229,29 @@ public class CharacterController2D : MonoBehaviour
                 rid.velocity = new Vector2(projection.x, rid.velocity.y);
             }
         }
-        else //°øÁß¿¡ ¶° ÀÖÀ» ¶§
+        else //ê³µì¤‘ì— ë–  ìˆì„ ë•Œ
         {
             rid.velocity = new Vector2(horizontalVelocity.x, rid.velocity.y);
         }
 
         rid.velocity = rid.velocity + externalVelocity;
 
-        //jumped ÀÓ½ÃÄÚµå
+        //jumped ì„ì‹œì½”ë“œ
         if (verticalVelocity.y > 0f)
         {
             rid.velocity = new Vector2(rid.velocity.x + externalVelocity.x, verticalVelocity.y);
-
-            Debug.Log(rid.velocity.y);
         }
 
         externalVelocity = Vector2.zero;
         verticalVelocity = Vector2.zero;
     }
 
+    /// <summary>
+    /// 2Dë²¡í„°ë¥¼ normalê°’ì— íˆ¬ì˜ (í˜ ìœ ì§€)
+    /// </summary>
+    /// <param name="vel"></param>
+    /// <param name="normal"></param>
+    /// <returns></returns>
     private Vector2 ProjectiOnPlane(Vector2 vel, Vector2 normal)
     {
         var mag = vel.magnitude;
