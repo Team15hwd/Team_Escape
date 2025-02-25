@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     private Animator animator;
     private SpriteRenderer sprRenderer;
 
+    [SerializeField]
     private PlayerState playerState;
     public PlayerState PlayerState
     {
@@ -25,7 +26,7 @@ public class Player : MonoBehaviour
         {
             playerState = value;
             //해시로 바꾸기
-            animator.SetInteger("StateID", (int)value);
+            animator.SetInteger("StateID", (int)playerState);
         }
     }
 
