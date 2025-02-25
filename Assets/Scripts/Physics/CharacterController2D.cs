@@ -47,8 +47,6 @@ public class CharacterController2D : MonoBehaviour
 
     public bool canJump = true;
 
-    private CountdownTimer jumpTickTimer = new();
-
     [ContextMenu("Out Controller")]
     public void UseOutOfControl()
     {
@@ -77,9 +75,6 @@ public class CharacterController2D : MonoBehaviour
         rid.bodyType = RigidbodyType2D.Dynamic;
         gravityCache = rid.gravityScale;
         myLayerCache = gameObject.layer;
-
-        jumpTickTimer.Reset(jumpTickDelay);
-        jumpTickTimer.OnTimerStop += () => canJump = true;
     }
 
     void FixedUpdate()
@@ -116,7 +111,6 @@ public class CharacterController2D : MonoBehaviour
     public void Move(Vector2 movePos)
     {
         horizontalVelocity.x = movePos.x;
-
         inputVelocity = movePos;
     }
 
@@ -124,12 +118,10 @@ public class CharacterController2D : MonoBehaviour
     {
         if (canJump)
         {
+            canJump = false;
+
             if (!isOutOfControl)
             {
-                canJump = false;
-                jumpTickTimer.Start(false);
-
-                float jumpForce = Mathf.Sqrt(Mathf.Max(0, jumpPower * jumpPower - rid.velocity.x * rid.velocity.x));
                 verticalVelocity.y = jumpPower;
             }
         }

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour, UserInput.IPlayer1Actions, UserInput.IPlayer2Actions
+public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerTribe tribe;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpPower;
     [Header("SFX")]
     [SerializeField] private SoundData jumpSFX;
-    
+
 
     private UserInput input;
     private CharacterController2D controller;
@@ -33,9 +33,21 @@ public class Player : MonoBehaviour, UserInput.IPlayer1Actions, UserInput.IPlaye
     {
         InitInputActions();
 
-        controller= GetComponent<CharacterController2D>();
+        controller = GetComponent<CharacterController2D>();
         animator = transform.GetChild(0).GetComponent<Animator>();
         sprRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+    }
+
+    void Start()
+    {
+        if (tribe == PlayerTribe.Human)
+        {
+            input.Player1.Jump.started += (val) => Jump();
+        }
+        else
+        {
+            input.Player2.Jump.started += (val) => Jump();
+        }
     }
 
     void OnEnable()
@@ -50,30 +62,37 @@ public class Player : MonoBehaviour, UserInput.IPlayer1Actions, UserInput.IPlaye
 
     void Update()
     {
-        if (tribe == PlayerTribe.Human)
-        {
-            controller.Move(input.Player1.Move.ReadValue<Vector2>() * moveSpeed);
-        }
-        else
-        {
-            controller.Move(input.Player2.Move.ReadValue<Vector2>() * moveSpeed);
-        }
-
         StateControl();
+
+        Vector2 moveDirection = Vector2.zero;
+
+        moveDirection = tribe == PlayerTribe.Human ?
+            input.Player1.Move.ReadValue<Vector2>() :
+            input.Player2.Move.ReadValue<Vector2>();
+
+        Move(moveDirection);
+    }
+
+    private void Move(Vector2 direction)
+    {
+        controller.Move(direction * moveSpeed);
+    }
+
+    private void Jump()
+    {
+        if (controller.canJump && controller.IsGrounded)
+        {
+            controller.Jump(jumpPower);
+            SoundManager.Instance.Bulider().WidthSoundData(jumpSFX).Play();
+        }
     }
 
     private void StateControl()
     {
         if (controller.IsGrounded)
         {
-            if (controller.Velocity.x - controller.externalVelocity.x != 0f)
-            {
-                PlayerState = PlayerState.Move;
-            }
-            else
-            {
-                PlayerState = PlayerState.Idle;
-            }
+            PlayerState = controller.Velocity.x - controller.externalVelocity.x != 0 ?
+                PlayerState.Move : PlayerState.Idle;
         }
         else
         {
@@ -89,31 +108,6 @@ public class Player : MonoBehaviour, UserInput.IPlayer1Actions, UserInput.IPlaye
     private void InitInputActions()
     {
         input = new();
-
-
-        if (tribe == PlayerTribe.Human)
-        {
-            input.Player1.SetCallbacks(this);
-        }
-        else
-        {
-            input.Player2.SetCallbacks(this);
-        }
-    }
-
-    public void OnMove(InputAction.CallbackContext context)
-    {
-        Vector2 inputVector = context.ReadValue<Vector2>();
-
-        if (context.phase == InputActionPhase.Performed)
-        {
-            if (controller.IsGrounded && inputVector.y > 0f)
-            {
-                controller.Jump(jumpPower);
-
-                SoundManager.Instance.Bulider().WidthSoundData(jumpSFX).Play();
-            }
-        }
     }
 }
 
