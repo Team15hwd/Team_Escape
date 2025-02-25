@@ -66,7 +66,7 @@ public class Player : MonoBehaviour, UserInput.IPlayer1Actions, UserInput.IPlaye
     {
         if (controller.IsGrounded)
         {
-            if (controller.Velocity.x != 0f)
+            if (controller.Velocity.x - controller.externalVelocity.x != 0f)
             {
                 PlayerState = PlayerState.Move;
             }
