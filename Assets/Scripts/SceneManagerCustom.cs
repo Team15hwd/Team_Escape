@@ -2,18 +2,18 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneCustomManager : Singleton<SceneCustomManager>
+public class SceneManagerCustom : Singleton<SceneManagerCustom>
 {
     public async UniTask LoadSceneAsync(string sceneName)
     {
-        Debug.Log($"[SceneManager] {sceneName} ¾À ·Îµå ½ÃÀÛ");
+        Debug.Log($"[SceneManager] {sceneName} ì”¬ ë¡œë“œ ì‹œìž‘");
 
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
         while (!asyncOperation.isDone)
         {
             await UniTask.Yield();
         }
 
-        Debug.Log($"[SceneManager] {sceneName} ¾À ·Îµå ¿Ï·á");
+        Debug.Log($"[SceneManager] {sceneName} ì”¬ ë¡œë“œ ì™„ë£Œ");
     }
 }
