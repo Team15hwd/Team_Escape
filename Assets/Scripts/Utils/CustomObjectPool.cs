@@ -5,11 +5,13 @@ using System;
 
 public class CustomObjectPool<T> where T : Component
 {
-    private List<T> objects = new();
+    private List<T> activateObjects = new();
 
     private int capacity;
     private int addtiveCount;
+    private int objectCount;
 
+    private Func<T> OnCreated;
     private event Action<T> OnGet = delegate { };
     private event Action<T> OnRelease = delegate { };
     private event Action<T> OnDelete = delegate { };
@@ -18,40 +20,67 @@ public class CustomObjectPool<T> where T : Component
         int initalSize, int capacity, int addtive = 1)
     {
         this.capacity = capacity;
+        this.objectCount = initalSize;
         this.addtiveCount = addtive;
 
-        actionOnRelease += Release;
-        actionOnDelete += Delete;
+        OnCreated += createFunc;
+        OnGet += actionOnGet;
+        OnRelease += actionOnRelease;
+        OnDelete += actionOnDelete;
 
         for (int i = 0; i < initalSize; i++)
         {
-            var go = createFunc?.Invoke();
-
-            objects.Add(go);
+            activateObjects.Add(OnCreated?.Invoke());
         }
+
+        OnGet += (ob) => activateObjects.Remove(ob);
     }
 
     public T Get()
     {
-        if (objects.Count != 0)
+        T obj;
+
+        if (activateObjects.Count > 0)
         {
-            return objects[0];
+            obj = activateObjects[0];
+            OnGet?.Invoke(obj);
+
+            return obj;
         }
         else
         {
+            var count = capacity - objectCount > 0 ? addtiveCount : 0;
 
+            if (count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    activateObjects.Add(OnCreated?.Invoke());
+                    objectCount++;
+                }
+            }
         }
-        return objects[0];
+
+        obj = activateObjects[0];
+        OnGet?.Invoke(obj);
+
+        return obj;
     }
 
     public void Release(T obj)
     {
-        objects.Add(obj);
+        activateObjects.Add(obj);
+        OnRelease?.Invoke(obj);
     }
 
     public void Delete(T obj)
     {
-        objects.Remove(obj);
+        activateObjects.Remove(obj);
+        OnDelete?.Invoke(obj);
     }
 
 }

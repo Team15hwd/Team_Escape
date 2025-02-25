@@ -29,7 +29,7 @@ public class CharacterController2D : MonoBehaviour
     private float gravityCache = float.MaxValue;
     private int myLayerCache;
 
-    //Ä³¸¯ÅÍÀÇ »óÅÂ ÇÃ·¡±×
+    //ìºë¦­í„°ì˜ ìƒíƒœ í”Œë˜ê·¸
     private bool isGrounded;
     private bool isSloped;
     private bool isSteepSloped;
@@ -54,7 +54,7 @@ public class CharacterController2D : MonoBehaviour
 
         if (isOutOfControl)
         {
-            //string°ªÀ» const or layermask ·Î ¼öÁ¤
+            //stringê°’ì„ const or layermask ë¡œ ìˆ˜ì •
             gameObject.layer = LayerMask.NameToLayer("IgnoreCollision");
             rid.velocity = Vector2.zero;
             verticalVelocity = Vector2.zero;
@@ -93,7 +93,7 @@ public class CharacterController2D : MonoBehaviour
         UpdateVelocity();
     }
 
-    //player Å¬·¡½º·Î ¿Å±â±â
+    //player í´ë˜ìŠ¤ë¡œ ì˜®ê¸°ê¸°
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out TriggerController tc))
@@ -133,7 +133,7 @@ public class CharacterController2D : MonoBehaviour
         }
     }
 
-    //¾Æ·¡·Î Ä³½ºÆ®¸¦ ½÷¼­ Áö¸é Á¤º¸ °ËÃâ Áö¸é Á¤º¸¸¦ ÅëÇØ »óÅÂ ÇÃ·¡±× º¯°æ
+    //ì•„ë˜ë¡œ ìºìŠ¤íŠ¸ë¥¼ ì´ì„œ ì§€ë©´ ì •ë³´ ê²€ì¶œ ì§€ë©´ ì •ë³´ë¥¼ í†µí•´ ìƒíƒœ í”Œë˜ê·¸ ë³€ê²½
     private void UpdateGrouning()
     {
         isGrounded = false;
@@ -147,7 +147,7 @@ public class CharacterController2D : MonoBehaviour
         var castOrigin = (Vector2)transform.position + (Vector2.down * capsuleHeight) + (Vector2.up * (capsuleRadius));
         var size = new Vector2(col.size.x - skinWidth, col.size.x) * transform.localScale;
 
-        //0.05 »ó¼ö°ªÀ¸·Î ¼öÁ¤;
+        //0.05 ìƒìˆ˜ê°’ìœ¼ë¡œ ìˆ˜ì •;
         var capsuleCast = Physics2D.CapsuleCast(castOrigin, size, col.direction, 0f, Vector2.down, skinWidth + 0.1f, targetLayers);
 
         if (capsuleCast)
@@ -179,7 +179,7 @@ public class CharacterController2D : MonoBehaviour
         }
     }
 
-    //º®¸é Á¤º¸ °ËÃâ isBlocked »óÅÂ º¯°æ
+    //ë²½ë©´ ì •ë³´ ê²€ì¶œ isBlocked ìƒíƒœ ë³€ê²½
     private void UpdateBlocking()
     {
         isBlocked = false;
@@ -187,7 +187,7 @@ public class CharacterController2D : MonoBehaviour
 
         var sign = Mathf.Sign(horizontalVelocity.x);
 
-        //»ó¼ö°ªÀ¸·Î º¯°æ
+        //ìƒìˆ˜ê°’ìœ¼ë¡œ ë³€ê²½
         var capsuleCast = Physics2D.CapsuleCast(transform.position, col.bounds.size * (Vector2)transform.localScale, col.direction, 0f, Vector2.right * sign,
             skinWidth + 0.01f, targetLayers);
 
@@ -204,7 +204,7 @@ public class CharacterController2D : MonoBehaviour
         }
     }
 
-    //ÇÃ·¡±×¿Í Áö¸é Á¤º¸¸¦ ÅëÇØ rigidbody.velocity¸¦ ¾÷µ¥ÀÌÆ®
+    //í”Œë˜ê·¸ì™€ ì§€ë©´ ì •ë³´ë¥¼ í†µí•´ rigidbody.velocityë¥¼ ì—…ë°ì´íŠ¸
     private void UpdateVelocity()
     {
         Debug.DrawLine(transform.position, transform.position + (Vector3)rid.velocity);
@@ -235,14 +235,14 @@ public class CharacterController2D : MonoBehaviour
                 rid.velocity = new Vector2(projection.x, rid.velocity.y);
             }
         }
-        else //°øÁß¿¡ ¶° ÀÖÀ» ¶§
+        else //ê³µì¤‘ì— ë–  ìˆì„ ë•Œ
         {
             rid.velocity = new Vector2(horizontalVelocity.x, rid.velocity.y);
         }
 
         rid.velocity = rid.velocity + externalVelocity;
 
-        //jumped ÀÓ½ÃÄÚµå
+        //jumped ì„ì‹œì½”ë“œ
         if (verticalVelocity.y > 0f)
         {
             rid.velocity = new Vector2(rid.velocity.x + externalVelocity.x, verticalVelocity.y);
@@ -255,7 +255,7 @@ public class CharacterController2D : MonoBehaviour
     }
 
     /// <summary>
-    /// 2Dº¤ÅÍ¸¦ normal°ª¿¡ Åõ¿µ (Èû À¯Áö)
+    /// 2Dë²¡í„°ë¥¼ normalê°’ì— íˆ¬ì˜ (í˜ ìœ ì§€)
     /// </summary>
     /// <param name="vel"></param>
     /// <param name="normal"></param>

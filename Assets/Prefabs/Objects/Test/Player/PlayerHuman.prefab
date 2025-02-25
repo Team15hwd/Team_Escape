@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4292161540497414620}
   - component: {fileID: 4433348478974775517}
   - component: {fileID: 6625902846072533715}
-  - component: {fileID: 602510620261398789}
+  - component: {fileID: 874279296761299039}
   m_Layer: 6
   m_Name: PlayerHuman
   m_TagString: Untagged
@@ -111,12 +111,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1e8009bb2194ca4cade4642f72f2751, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accel: 50
   skinWidth: 0.01
   targetLayers:
     serializedVersion: 2
     m_Bits: 1280
-  detectingDistance: 1
   jumpTickDelay: 1
   maxSlope: 60
   externalVelocity: {x: 0, y: 0}
@@ -137,7 +135,18 @@ MonoBehaviour:
   tribe: 0
   moveSpeed: 6
   jumpPower: 15
---- !u!96 &602510620261398789
+  jumpSFX:
+    clip: {fileID: 8300000, guid: 77652247246f011409d85d128e2a955e, type: 3}
+    outputMixerGroup: {fileID: 1770267706659360427, guid: db9e2b5412c56e8428c8d5395b6955d7, type: 2}
+    mute: 0
+    loop: 0
+    playOnAwake: 1
+    pitch: 1
+    volume: 1
+    panStereo: 0
+    spatialBlend: 0
+    reverbZoneMix: 1
+--- !u!96 &874279296761299039
 TrailRenderer:
   serializedVersion: 3
   m_ObjectHideFlags: 0

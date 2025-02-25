@@ -10,7 +10,7 @@ public class SoundData
     public AudioMixerGroup outputMixerGroup;
     public bool mute = false;
     public bool loop = false;
-    public bool playOnAwake = true;
+    public bool playOnAwake = false;
     [Range(0f, 1f)]
     public float pitch = 1f;
     [Range(0f, 1f)]

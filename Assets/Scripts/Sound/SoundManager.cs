@@ -6,19 +6,35 @@ public class SoundManager : Singleton<SoundManager>
 {
     [SerializeField] private SoundEmitter emitterPrefab;
 
-    private Dictionary<SoundData, SoundEmitter> sounds = new();
+    [Header("Pool")]
+    [SerializeField] private int initialPoolSize = 15;
+    [SerializeField] private int maxPoolSize = 30;
+    [SerializeField] private int maxSoundInstance = 5;
+
+    private Dictionary<SoundData, int> soundInstances = new();
     private CustomObjectPool<SoundEmitter> emitterPool = new();
 
+    public SoundBuilder Bulider() => new SoundBuilder(this);
 
-    void Awake()
+    void Start()
     {
-        emitterPool.Create(CreateObjects, TakeFromPool, ReturnToPool, DeletePoolObject,
-            10, 20);
+        emitterPool.Create(CreateObjects, OnTakeFromPool, OnReturnToPool, OnDestroyPoolObject,
+            initialPoolSize, maxPoolSize);
     }
 
-    public void PlaySound(SoundData data)
+    public SoundEmitter Get()
     {
+        return emitterPool.Get();
+    }
 
+    public bool CanPlaySound(SoundData data)
+    {
+        return !soundInstances.TryGetValue(data, out var count) || count < maxSoundInstance;
+    }
+
+    public void ReturnToPool(SoundEmitter emitter)
+    {
+        emitterPool.Release(emitter);
     }
 
     private SoundEmitter CreateObjects()
@@ -30,17 +46,26 @@ public class SoundManager : Singleton<SoundManager>
         return go;
     }
 
-    private void TakeFromPool(SoundEmitter emitter)
+    private void OnTakeFromPool(SoundEmitter emitter)
     {
+        if (soundInstances.TryGetValue(emitter.SoundData, out var sound))
+        {
+            sound++;
+        }
+        else
+        {
+            soundInstances[emitter.SoundData] = 1;
+        }
+
         emitter.gameObject.SetActive(true);
     }
 
-    public void ReturnToPool(SoundEmitter emitter)
+    public void OnReturnToPool(SoundEmitter emitter)
     {
         emitter.gameObject.SetActive(false);
     }
 
-    public void DeletePoolObject(SoundEmitter emitter)
+    public void OnDestroyPoolObject(SoundEmitter emitter)
     {
         Destroy(emitter.gameObject);
     }
