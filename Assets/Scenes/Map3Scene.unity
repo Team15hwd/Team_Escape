@@ -959,11 +959,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6842690923730407107, guid: 7d6a4264d1ae7a443a5df55ebce3dde0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -18.97
       objectReference: {fileID: 0}
     - target: {fileID: 6842690923730407107, guid: 7d6a4264d1ae7a443a5df55ebce3dde0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -13.48
       objectReference: {fileID: 0}
     - target: {fileID: 6842690923730407107, guid: 7d6a4264d1ae7a443a5df55ebce3dde0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7081,6 +7081,18 @@ PrefabInstance:
       propertyPath: startMode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7678885248893007335, guid: 17c83af0360119841b30f2976879ad8c, type: 3}
+      propertyPath: m_Color.b
+      value: 0.49803925
+      objectReference: {fileID: 0}
+    - target: {fileID: 7678885248893007335, guid: 17c83af0360119841b30f2976879ad8c, type: 3}
+      propertyPath: m_Color.g
+      value: 0.49803925
+      objectReference: {fileID: 0}
+    - target: {fileID: 7678885248893007335, guid: 17c83af0360119841b30f2976879ad8c, type: 3}
+      propertyPath: m_Color.r
+      value: 0.49803925
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7237,7 +7249,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: f6820d7cf187aec4a81ad995142a9ab8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
