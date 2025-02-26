@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneLoader: {fileID: 3709104249978170752}
-  doorOpenSprite: {fileID: 0}
+  doorOpenSprite: {fileID: 21300000, guid: 0434941eac391ca4994fde46eeaaf417, type: 3}
 --- !u!114 &3709104249978170752
 MonoBehaviour:
   m_ObjectHideFlags: 0
