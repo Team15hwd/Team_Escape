@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
     {
         if (controller.IsGrounded)
         {
-            PlayerState = controller.Velocity.x - controller.externalVelocity.x != 0 ?
+            PlayerState = Mathf.Abs(controller.Velocity.x - controller.externalVelocity.x) > 0.1f ?
                 PlayerState.Move : PlayerState.Idle;
         }
         else

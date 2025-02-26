@@ -492,6 +492,16 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: 8, y: -8, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 109
+      m_TileSpriteIndex: 109
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: -3, y: -7, z: 0}
     second:
       serializedVersion: 2
@@ -1352,6 +1362,8 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: bf1658a55fc1e424abdbc2b36fa4b3a3, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 52fb5a0b3cc1ca746a4912b578394ef0, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: a1c55d9630116a54983a77af493b1d1d, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 1
     m_Data: {fileID: 350663620, guid: 4371f1ef95515f441ae5787edd659dd9, type: 3}
@@ -1571,8 +1583,10 @@ Tilemap:
     m_Data: {fileID: -490505067, guid: 4371f1ef95515f441ae5787edd659dd9, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 153dcf5bff86c934a8e93fdb9be40e15, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: 7312f807d7280344abc13d426dd7764e, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 109
+  - m_RefCount: 110
     m_Data:
       e00: 1
       e01: 0
@@ -1591,7 +1605,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 109
+  - m_RefCount: 110
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -1755,10 +1769,10 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
+  m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
@@ -1794,7 +1808,7 @@ SpriteRenderer:
   m_Size: {x: 1.69, y: 2.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &7360439125845370885
@@ -1818,7 +1832,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4592836586808255314
+--- !u!114 &3516959031448775165
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

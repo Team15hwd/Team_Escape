@@ -29,7 +29,7 @@ public class SoundBuilder
         return this;
     }
 
-    public void Play()
+    public SoundEmitter Play()
     {
         if (manager.CanPlaySound(soundData))
         {
@@ -43,8 +43,12 @@ public class SoundBuilder
                 if (manager.CanPlaySound(soundData))
                 {
                     emitter.Play();
+
+                    return emitter;
                 }
             }
         }
+
+        return null;
     }
 }

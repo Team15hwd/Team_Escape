@@ -52,7 +52,7 @@ public class MovingPlatform : TriggerController
 
         for (int i = 0; i < cast; i++)
         {
-            //Ä³½Ã·Î ÃÖÀûÈ­ ÇÕ½Ã´Ù
+            //ìºì‹œë¡œ ìµœì í™” í•©ì‹œë‹¤
             var cc = hits[i].transform.GetComponent<CharacterController2D>();
 
             if (Mathf.Sign(velocity.y) >= 0)

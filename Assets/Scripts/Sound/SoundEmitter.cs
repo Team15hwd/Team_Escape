@@ -10,10 +10,16 @@ public class SoundEmitter : MonoBehaviour
     public SoundData SoundData { get; set; }
 
     private AudioSource source;
+    private bool isStop = false;
 
     void Awake()
     {
         source = GetComponent<AudioSource>();
+    }
+
+    void OnEnable()
+    {
+        isStop = false;
     }
 
     public void Initialize(SoundData data)
@@ -50,11 +56,15 @@ public class SoundEmitter : MonoBehaviour
     private async UniTask WaitForSoundToEnd()
     {
         await UniTask.WaitUntil(() => source && !source.isPlaying);
-        Stop();
+        if (!isStop)
+        {
+            Stop();
+        }
     }
 
     public void Stop()
     {
+        isStop = true;
         SoundManager.Instance.ReturnToPool(this);
     }
 }
