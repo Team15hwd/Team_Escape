@@ -21,6 +21,18 @@ EditorBuildSettings:
     path: Assets/Scenes/Sample.unity
     guid: dc6c70135e7a85741b0df9116e18bd1d
   - enabled: 1
+    path: Assets/Scenes/BadEnding.unity
+    guid: 1c62ca224bc9d084c9ed7aa9ea0053c7
+  - enabled: 1
+    path: Assets/Scenes/HappyEnding.unity
+    guid: b11f20dfc8323d249a7b44c8cd55f2e8
+  - enabled: 1
+    path: Assets/Scenes/StageSelectScene.unity
+    guid: 6b4b4ed6f44fe4d45b387a0fb8798102
+  - enabled: 1
+    path: Assets/Scenes/StorySceneMap1Clear.unity
+    guid: 97320d3fdbc7e4445aee5c9bc23f11bf
+  - enabled: 1
     path: Assets/Scenes/Sample_TutoiralMap_Test.unity
     guid: 6cf411fa9a800784e83599823120b952
   - enabled: 1
