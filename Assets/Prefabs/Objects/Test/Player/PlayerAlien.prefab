@@ -242,7 +242,7 @@ MonoBehaviour:
   moveSpeed: 6
   jumpPower: 15
   jumpSFX:
-    clip: {fileID: 8300000, guid: 77652247246f011409d85d128e2a955e, type: 3}
+    clip: {fileID: 8300000, guid: b85ea737b1fc45243a28d3a83604f91c, type: 3}
     outputMixerGroup: {fileID: 1770267706659360427, guid: db9e2b5412c56e8428c8d5395b6955d7, type: 2}
     mute: 0
     loop: 0
@@ -252,6 +252,7 @@ MonoBehaviour:
     panStereo: 0
     spatialBlend: 0
     reverbZoneMix: 1
+  playerState: 0
 --- !u!96 &4834328131608410079
 TrailRenderer:
   serializedVersion: 3
