@@ -7,6 +7,8 @@ public class DoorController : MonoBehaviour
     [SerializeField] private SceneLoader sceneLoader;
     [SerializeField] private Sprite doorOpenSprite;
 
+    private ClearEvent clearEvent = new ClearEvent();
+
     private TriggerCollision[] triggers = new TriggerCollision[2];
     private const int playerCount = 2;
 
@@ -14,6 +16,8 @@ public class DoorController : MonoBehaviour
 
     void Awake()
     {
+        clearEvent.sceneLoader = sceneLoader;
+
         for (int i = 0; i < playerCount; i++)
         {
             var tr = transform.GetChild(i).GetComponent<TriggerCollision>();
@@ -25,7 +29,7 @@ public class DoorController : MonoBehaviour
 
                 if (triggerCount > 1)
                 {
-                    sceneLoader.LoadScene();
+                    EventBus.Call(clearEvent);
                 }
             };
 
@@ -40,6 +44,4 @@ public class DoorController : MonoBehaviour
             sceneLoader = GetComponent<SceneLoader>();
         }
     }
-
-    
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Threading;
 
 public abstract class Timer
 {
@@ -45,12 +46,12 @@ public class CountdownTimer : Timer
 
     }
 
-    public override void Start(bool ignoreTimeScale = true)
+    public override void Start(bool ignoreTimeScale = false)
     {
         StartAsync(ignoreTimeScale).Forget();
     }
 
-    protected async UniTask StartAsync(bool ignoreTimeScale = true)
+    protected async UniTask StartAsync(bool ignoreTimeScale)
     {
         OnTimerStartInvoke();
 
@@ -65,13 +66,70 @@ public class CountdownTimer : Timer
         OnTimerStopInvoke();
     }
 
-    public void Reset(float newTime, bool ignoreTimeScale = true)
+    public void Reset(float newTime, bool ignoreTimeScale = false)
     {
         time = newTime;
     }
 
-    public void Reset(bool ignoreTimeScale = true)
+    public void Reset(bool ignoreTimeScale = false)
     {
         time = internalTime;
+    }
+}
+
+public class StopWatch : Timer
+{
+    private CancellationTokenSource cts;
+    private bool isResume = true;
+
+    public override void Start(bool ignoreTimeScale = false)
+    {
+        End();
+
+        time = 0f;
+        isResume = true;
+        StartAsync(ignoreTimeScale).Forget();
+    }
+
+    protected async UniTask StartAsync(bool ignoreTimeScale)
+    {
+        cts = new();
+        
+        OnTimerStartInvoke();
+
+        while (cts != null && !cts.IsCancellationRequested)
+        {
+            await UniTask.NextFrame(PlayerLoopTiming.Update);
+
+            if (isResume)
+            {
+                time += ignoreTimeScale ? Time.unscaledDeltaTime : Time.deltaTime;
+                OnTimerUpdateInvoke();
+            }
+        }
+
+        OnTimerStopInvoke();
+    }
+
+    public float Stop(bool isEnd = true)
+    {
+        isResume = false;
+
+        if (isEnd)
+        {
+            End();
+        }
+
+        return time;
+    }
+    
+    public void End()
+    {
+        cts?.Cancel();
+    }
+
+    public void Resume()
+    {
+        isResume = true;
     }
 }
