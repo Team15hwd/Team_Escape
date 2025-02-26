@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 769d38fec56bccd468c544e2651ec99e
+guid: 6882df13a993b2d4f856b316ac68997c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -136,13 +136,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SettingSlideBar_0
+      name: Heart_0
       rect:
         serializedVersion: 2
-        x: 155
-        y: 734
-        width: 628
-        height: 125
+        x: 326
+        y: 568
+        width: 148
+        height: 123
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,29 +150,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 29104404f30221c45b1438da2504ff19
-      internalID: -503974330
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SettingSlideBar_1
-      rect:
-        serializedVersion: 2
-        x: 689
-        y: 732
-        width: 23
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f64e15ee59d8f024f95605f03aeba2ab
-      internalID: -1267164914
+      spriteID: 57e91833e7c3ef94badb4f87122337ba
+      internalID: -1822140183
       vertices: []
       indices: 
       edges: []
@@ -188,8 +167,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SettingSlideBar_0: -503974330
-      SettingSlideBar_1: -1267164914
+      Heart_0: -1822140183
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
