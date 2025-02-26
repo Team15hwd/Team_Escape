@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 public class Potal : MonoBehaviour
 {
+    [SerializeField] private SoundData soundData;
+
     private List<TriggerCollision> triggerCollisions = new(2);
     private Vector2[] linkedPos= new Vector2[2];
 
@@ -38,10 +40,11 @@ public class Potal : MonoBehaviour
             timer.Start(false);
 
             int idx = triggerCollisions.FindIndex(x => x == col);
-
             idx = idx > 0 ? 0 : 1;
 
             go.transform.position = linkedPos[idx];
+
+            SoundManager.Instance.Bulider().WidthSoundData(soundData).Play();
         }
     }
 
