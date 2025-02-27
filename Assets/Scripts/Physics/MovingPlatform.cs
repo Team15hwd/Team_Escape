@@ -92,6 +92,11 @@ public class MovingPlatform : TriggerController
         {
             targetPos = targetPos == waypoint2Pos ? waypoint1Pos : waypoint2Pos;
             direction = targetPos - rid.position;
+            if (loopMode == LoopMode.Off)
+            {
+                rid.velocity = Vector2.zero;
+                isRuning = false;
+            }
         }
     }
 
