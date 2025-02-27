@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
         }
     }
 
+    private bool isDead = false;
+
     void Awake()
     {
         InitInputActions();
@@ -72,6 +74,12 @@ public class Player : MonoBehaviour
             input.Player2.Move.ReadValue<Vector2>();
 
         Move(moveDirection);
+
+
+        if (!isDead)
+        {
+
+        }
     }
 
     private void Move(Vector2 direction)
@@ -90,6 +98,13 @@ public class Player : MonoBehaviour
 
     private void StateControl()
     {
+        if (playerState == PlayerState.Dead)
+        {
+            PlayerState = PlayerState.Jump;
+            return;
+        }
+
+
         if (controller.IsGrounded)
         {
             PlayerState = Mathf.Abs(controller.Velocity.x - controller.externalVelocity.x) > 0.1f ?
@@ -112,6 +127,11 @@ public class Player : MonoBehaviour
     }
 }
 
+public class DeadEvent : IGameEvent
+{
+
+}
+
 
 public enum PlayerTribe
 {
@@ -125,5 +145,5 @@ public enum PlayerState
     Move,
     Jump,
     Ladder,
-    Die
+    Dead
 }
