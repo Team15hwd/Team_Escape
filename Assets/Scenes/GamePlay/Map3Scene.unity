@@ -7395,7 +7395,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1612211156}
-  m_BodyType: 1
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -8229,7 +8229,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1638987497}
-  m_BodyType: 1
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -9083,11 +9083,30 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5374147630224654013, guid: 1aa006746807ab046814f6fe1931af9d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1920350178}
+    - target: {fileID: 7647589868445991612, guid: 1aa006746807ab046814f6fe1931af9d, type: 3}
+      propertyPath: sceneAsset
+      value: 
+      objectReference: {fileID: 102900000, guid: e5d6e4540c765824aa510690ae8d54e3, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1aa006746807ab046814f6fe1931af9d, type: 3}
+--- !u!114 &1920350178 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7647589868445991612, guid: 1aa006746807ab046814f6fe1931af9d, type: 3}
+  m_PrefabInstance: {fileID: 1920350177}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df6c8eddf00715f49a769bbb84735541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1974552413
 GameObject:
   m_ObjectHideFlags: 0
@@ -9688,5 +9707,5 @@ SceneRoots:
   - {fileID: 1528351390}
   - {fileID: 343525495}
   - {fileID: 1036845685}
-  - {fileID: 1920350177}
   - {fileID: 1113401031}
+  - {fileID: 1920350177}

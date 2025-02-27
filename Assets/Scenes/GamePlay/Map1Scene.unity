@@ -1453,15 +1453,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5130063904358575910, guid: 1aa006746807ab046814f6fe1931af9d, type: 3}
-      propertyPath: m_Name
-      value: TimerPanel
+    - target: {fileID: 5374147630224654013, guid: 1aa006746807ab046814f6fe1931af9d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1368449602}
+    - target: {fileID: 5374147630224654013, guid: 1aa006746807ab046814f6fe1931af9d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadScene
       objectReference: {fileID: 0}
+    - target: {fileID: 5374147630224654013, guid: 1aa006746807ab046814f6fe1931af9d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SceneLoader, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5374147630224654013, guid: 1aa006746807ab046814f6fe1931af9d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7647589868445991612, guid: 1aa006746807ab046814f6fe1931af9d, type: 3}
+      propertyPath: sceneAsset
+      value: 
+      objectReference: {fileID: 102900000, guid: 97320d3fdbc7e4445aee5c9bc23f11bf, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1aa006746807ab046814f6fe1931af9d, type: 3}
+--- !u!114 &1368449602 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7647589868445991612, guid: 1aa006746807ab046814f6fe1931af9d, type: 3}
+  m_PrefabInstance: {fileID: 1368449601}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df6c8eddf00715f49a769bbb84735541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1419767613
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3918,5 +3945,5 @@ SceneRoots:
   - {fileID: 709268137}
   - {fileID: 698918359}
   - {fileID: 1419767613}
-  - {fileID: 1368449601}
   - {fileID: 1820798948}
+  - {fileID: 1368449601}

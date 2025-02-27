@@ -128,6 +128,11 @@ public class StopWatch : Timer
         cts?.Cancel();
     }
 
+    public void Reset()
+    {
+        time = 0f;
+    }
+
     public void Resume()
     {
         isResume = true;
