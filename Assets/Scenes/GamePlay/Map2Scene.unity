@@ -256,7 +256,7 @@ PrefabInstance:
     - target: {fileID: 3709104249978170752, guid: efd6c34639a1a4d4e98274994f759dc5, type: 3}
       propertyPath: sceneAsset
       value: 
-      objectReference: {fileID: 102900000, guid: e5d6e4540c765824aa510690ae8d54e3, type: 3}
+      objectReference: {fileID: 102900000, guid: f6037fdbc231a4a4a85149b184718f40, type: 3}
     - target: {fileID: 5847577208453621219, guid: efd6c34639a1a4d4e98274994f759dc5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.75
