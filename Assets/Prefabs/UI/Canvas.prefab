@@ -841,8 +841,9 @@ GameObject:
   - component: {fileID: 4144863080165886116}
   - component: {fileID: 1244349144295219117}
   - component: {fileID: 2832508478469490001}
+  - component: {fileID: 2710317292561211821}
   m_Layer: 5
-  m_Name: NextBtn
+  m_Name: StageBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -949,7 +950,32 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1244349144295219117}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2710317292561211821}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2710317292561211821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3970386252153902162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df6c8eddf00715f49a769bbb84735541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneAsset: {fileID: 102900000, guid: 6b4b4ed6f44fe4d45b387a0fb8798102, type: 3}
 --- !u!1 &5130063904358575910
 GameObject:
   m_ObjectHideFlags: 0
@@ -1390,7 +1416,7 @@ GameObject:
   - component: {fileID: 4022725977041527736}
   - component: {fileID: 2620374311778003098}
   m_Layer: 5
-  m_Name: Retry
+  m_Name: RetryBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1592,7 +1618,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3546620787585366336
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2287,6 +2313,7 @@ GameObject:
   - component: {fileID: 1403494425556448644}
   - component: {fileID: 3915201284997298191}
   - component: {fileID: 8856247828674496759}
+  - component: {fileID: 3447725079081143872}
   m_Layer: 5
   m_Name: FailPanel
   m_TagString: Untagged
@@ -2354,3 +2381,16 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 0.5
+--- !u!114 &3447725079081143872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8310910802068337055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a04464e1c868f604d8d28277fcaeef75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  retryButton: {fileID: 0}
