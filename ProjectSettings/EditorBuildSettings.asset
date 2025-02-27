@@ -33,11 +33,23 @@ EditorBuildSettings:
     path: Assets/Scenes/StorySceneMap1Clear.unity
     guid: 97320d3fdbc7e4445aee5c9bc23f11bf
   - enabled: 1
+    path: Assets/Scenes/StorySceneStart.unity
+    guid: 92f3cc826c9111848968fb2c298676cb
+  - enabled: 1
     path: Assets/Scenes/Sample_TutoiralMap_Test.unity
     guid: 6cf411fa9a800784e83599823120b952
   - enabled: 1
     path: Assets/Scenes/StartScene.unity
     guid: f3441c929a45b2d4fa84541a8ce67aa5
+  - enabled: 1
+    path: Assets/Scenes/Map2.unity
+    guid: 62b6be58970b1f94597d89e81f275300
+  - enabled: 1
+    path: Assets/Scenes/StorySceneMap2Clear.unity
+    guid: 92dae5d9672d7bd47b7d4a6e3d9b4298
+  - enabled: 1
+    path: Assets/Scenes/StorySceneMap3Clear.unity
+    guid: e5d6e4540c765824aa510690ae8d54e3
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 2320889a9075b8f46aa86cdb611083ab, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: f547bb26490d883428577aa9efcfff4e, type: 2}
