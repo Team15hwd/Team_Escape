@@ -54,7 +54,7 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
 
     private async UniTask StartFade()
     {
-        while (fadeImage.fillAmount < 0.99f)
+        while (fadeImage.fillAmount < 0.999f)
         {
             await UniTask.NextFrame();
 
@@ -66,7 +66,7 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
 
     private async UniTask EndFade()
     {
-        while (fadeImage.fillAmount > 0.01f)
+        while (fadeImage.fillAmount > 0.001f)
         {
             await UniTask.NextFrame();
 

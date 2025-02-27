@@ -69,7 +69,10 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (isDead)
+        {
+            transform.Rotate(new Vector3(5f, 5f, 5f));
             return;
+        }
 
         UpdateState();
 

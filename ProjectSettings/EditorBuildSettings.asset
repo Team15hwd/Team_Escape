@@ -6,49 +6,49 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Sample_TileMap.unity
+    path: Assets/Scenes/Sample/Sample_TileMap.unity
     guid: c127668408c6c88489a906e63e5f20b8
   - enabled: 1
-    path: Assets/Scenes/Map1Scene.unity
+    path: Assets/Scenes/GamePlay/Map1Scene.unity
     guid: 727199186a37f1f4c8b2eecc7529f133
   - enabled: 1
-    path: Assets/Scenes/Map2Scene.unity
+    path: Assets/Scenes/GamePlay/Map2Scene.unity
     guid: 233f58ab7fdb7ff44ba101f632f052ca
   - enabled: 1
-    path: Assets/Scenes/Map3Scene.unity
+    path: Assets/Scenes/GamePlay/Map3Scene.unity
     guid: f6037fdbc231a4a4a85149b184718f40
   - enabled: 1
-    path: Assets/Scenes/Sample.unity
+    path: Assets/Scenes/Sample/Sample.unity
     guid: dc6c70135e7a85741b0df9116e18bd1d
   - enabled: 1
-    path: Assets/Scenes/HappyEndingScene.unity
+    path: Assets/Scenes/CutScene/HappyEndingScene.unity
     guid: 1c62ca224bc9d084c9ed7aa9ea0053c7
   - enabled: 1
-    path: Assets/Scenes/BadEndingScene.unity
+    path: Assets/Scenes/CutScene/BadEndingScene.unity
     guid: b11f20dfc8323d249a7b44c8cd55f2e8
   - enabled: 1
     path: Assets/Scenes/StageSelectScene.unity
     guid: 6b4b4ed6f44fe4d45b387a0fb8798102
   - enabled: 1
-    path: Assets/Scenes/StorySceneMap1Clear.unity
+    path: Assets/Scenes/CutScene/StorySceneMap1Clear.unity
     guid: 97320d3fdbc7e4445aee5c9bc23f11bf
   - enabled: 1
-    path: Assets/Scenes/StorySceneStart.unity
+    path: Assets/Scenes/CutScene/PrologueScene.unity
     guid: 92f3cc826c9111848968fb2c298676cb
   - enabled: 1
-    path: Assets/Scenes/Sample_TutoiralMap_Test.unity
+    path: Assets/Scenes/GamePlay/Sample_TutoiralMap_Test.unity
     guid: 6cf411fa9a800784e83599823120b952
   - enabled: 1
-    path: Assets/Scenes/StartScene.unity
+    path: Assets/Scenes/TitleScene.unity
     guid: f3441c929a45b2d4fa84541a8ce67aa5
   - enabled: 1
-    path: Assets/Scenes/Map2.unity
+    path: Assets/Scenes/Sample/Map2.unity
     guid: 62b6be58970b1f94597d89e81f275300
   - enabled: 1
-    path: Assets/Scenes/StorySceneMap2Clear.unity
+    path: Assets/Scenes/CutScene/StorySceneMap2Clear.unity
     guid: 92dae5d9672d7bd47b7d4a6e3d9b4298
   - enabled: 1
-    path: Assets/Scenes/StorySceneMap3Clear.unity
+    path: Assets/Scenes/CutScene/StorySceneMap3Clear.unity
     guid: e5d6e4540c765824aa510690ae8d54e3
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 2320889a9075b8f46aa86cdb611083ab, type: 2}

@@ -357,7 +357,7 @@ GameObject:
   - component: {fileID: 1816190745479658074}
   - component: {fileID: 2465468518146062091}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: GamePlayCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -986,7 +986,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5485705483936136178}
   m_Layer: 5
-  m_Name: TimeStarPanel
+  m_Name: TimerPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
