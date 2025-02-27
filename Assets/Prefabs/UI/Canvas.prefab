@@ -463,7 +463,7 @@ MonoBehaviour:
   clearPannel: {fileID: 3546620787585366336}
   failPannel: {fileID: 1403494425556448644}
   clearPanelUI: {fileID: 7505550054522628744}
-  timeStars:
+  timerFillImages:
   - {fileID: 1813267420967152110}
   - {fileID: 1127768225724154833}
   - {fileID: 231877080213590364}
@@ -952,12 +952,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2710317292561211821}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: LoadScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2393,4 +2393,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a04464e1c868f604d8d28277fcaeef75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  retryButton: {fileID: 0}
+  retryButton: {fileID: 2620374311778003098}

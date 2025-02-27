@@ -8,14 +8,14 @@ public class GamePlayUI : MonoBehaviour
     [SerializeField] private RectTransform clearPannel;
     [SerializeField] private RectTransform failPannel;
     [SerializeField] private ClearPanelUI clearPanelUI;
-    [SerializeField] private List<Image> timeStars = new();
+    [SerializeField] private List<Image> timerFillImages = new();
 
     private StageInfo info;
 
     void Start()
     {
-        EventBus.Subscribe<ClearEvent>((val) => StageClear(val));
-        EventBus.Subscribe<DeadEvent>((val) => StageFail());
+        EventBus.Subscribe<ClearEvent>(StageClear);
+        EventBus.Subscribe<DeadEvent>(StageFail);
 
         clearPannel.gameObject.SetActive(false);
         failPannel.gameObject.SetActive(false);
@@ -23,9 +23,20 @@ public class GamePlayUI : MonoBehaviour
         OnStage();
     }
 
+    void OnDisable()
+    {
+        
+    }
+
+    void OnDestroy()
+    {
+        EventBus.Unsubscribe<ClearEvent>(StageClear);
+        EventBus.Unsubscribe<DeadEvent>(StageFail);
+    }
+
     void Update()
     {
-        DisplayTimeStar();
+        DisplayTimer();
     }
 
     private void OnStage()
@@ -38,33 +49,30 @@ public class GamePlayUI : MonoBehaviour
     {
         if (info == null)
             return;
-        //clearPannel.gameObject.SetActive(true);
-        ////조건에 따라 별 생성
 
-        //callback.sceneLoader.LoadScene();
         clearPanelUI.gameObject.SetActive(true);
         clearPanelUI.StageClear(info);
         clearPanelUI.LoadScene(() => clearEvent.sceneLoader.LoadScene());
 
-        timeStars.ForEach(s => s.fillAmount = 1f);
+        timerFillImages.ForEach(s => s.fillAmount = 1f);
     }
 
-    private void StageFail()
+    private void StageFail(DeadEvent deadEvent)
     {
         failPannel.gameObject.SetActive(true);
     }
 
-    private void DisplayTimeStar()
+    private void DisplayTimer()
     {
         float currentTime = GameTime.Time();
 
         if (info.PerpectClearTime > currentTime)
         {
-            timeStars[0].fillAmount = 1 - (currentTime / info.PerpectClearTime);
+            timerFillImages[0].fillAmount = 1 - (currentTime / info.PerpectClearTime);
         }
         else if (info.NormalClearTime > currentTime)
         {
-            timeStars[1].fillAmount = 1 - ((currentTime - info.PerpectClearTime) / (info.NormalClearTime - info.PerpectClearTime));
+            timerFillImages[1].fillAmount = 1 - ((currentTime - info.PerpectClearTime) / (info.NormalClearTime - info.PerpectClearTime));
         }
     }
 }

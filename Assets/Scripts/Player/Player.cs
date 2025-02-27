@@ -127,6 +127,7 @@ public class Player : MonoBehaviour
     {
         isDead = true;
         gameObject.layer = isDead ? LayerMask.NameToLayer("Dead") : gameObject.layer;
+        controller.enabled = false;
 
         CountdownTimer timer = new(1.5f);
 
