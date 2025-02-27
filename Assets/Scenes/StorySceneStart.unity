@@ -203,6 +203,8 @@ GameObject:
   - component: {fileID: 1666365176}
   - component: {fileID: 1666365178}
   - component: {fileID: 1666365177}
+  - component: {fileID: 1666365180}
+  - component: {fileID: 1666365179}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -300,6 +302,32 @@ VideoPlayer:
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
+--- !u!114 &1666365179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666365173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 687a221b811057242a67ec56e3e880c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneLoader: {fileID: 1666365180}
+--- !u!114 &1666365180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666365173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df6c8eddf00715f49a769bbb84735541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneAsset: {fileID: 102900000, guid: 6b4b4ed6f44fe4d45b387a0fb8798102, type: 3}
 --- !u!1 &1676591692
 GameObject:
   m_ObjectHideFlags: 0
