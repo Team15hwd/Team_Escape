@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class Player : MonoBehaviour
 {
@@ -31,6 +32,8 @@ public class Player : MonoBehaviour
     }
 
     private bool isDead = false;
+
+    public event Action<bool> IsDead;
 
     void Awake()
     {
@@ -65,7 +68,10 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        StateControl();
+        if (isDead)
+            return;
+
+        UpdateState();
 
         Vector2 moveDirection = Vector2.zero;
 
@@ -75,10 +81,31 @@ public class Player : MonoBehaviour
 
         Move(moveDirection);
 
-
-        if (!isDead)
+        if (IsOutOfCameraView())
         {
+            OnDead();
+        }
+    }
 
+    private bool IsOutOfCameraView()
+    {
+        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+
+        if (!GeometryUtility.TestPlanesAABB(planes, sprRenderer.bounds))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        string damageTag = tribe != PlayerTribe.Human ? "Oxygen" : "Exanova";
+
+        if (collision.CompareTag(damageTag))
+        {
+            OnDead();
         }
     }
 
@@ -96,7 +123,18 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void StateControl()
+    public void OnDead()
+    {
+        isDead = true;
+        gameObject.layer = isDead ? LayerMask.NameToLayer("Dead") : gameObject.layer;
+
+        CountdownTimer timer = new(1.5f);
+
+        timer.OnTimerStop += () => EventBus.Call<DeadEvent>(new DeadEvent());
+        timer.Start(true);
+    }
+
+    private void UpdateState()
     {
         if (playerState == PlayerState.Dead)
         {

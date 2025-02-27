@@ -15,6 +15,7 @@ public class GamePlayUI : MonoBehaviour
     void Start()
     {
         EventBus.Subscribe<ClearEvent>((val) => StageClear(val));
+        EventBus.Subscribe<DeadEvent>((val) => StageFail());
 
         clearPannel.gameObject.SetActive(false);
         failPannel.gameObject.SetActive(false);
@@ -50,7 +51,7 @@ public class GamePlayUI : MonoBehaviour
 
     private void StageFail()
     {
-
+        failPannel.gameObject.SetActive(true);
     }
 
     private void DisplayTimeStar()
