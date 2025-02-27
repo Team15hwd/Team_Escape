@@ -5,11 +5,15 @@ using UnityEngine.SceneManagement;
 using Cysharp.Threading.Tasks;
 using UnityEditor;
 using System;
+using UnityEngine.UI;
 
 public class SceneLoadManager : Singleton<SceneLoadManager>
 {
+    [SerializeField] private Image fadeImage;
+    [SerializeField] private float fadeSpeed = 0.1f;
+
     private bool isLoading = false;
-    
+
     public event Action OnSceneLoad = delegate { };
 
     public void LoadScene(string sceneName)
@@ -33,14 +37,43 @@ public class SceneLoadManager : Singleton<SceneLoadManager>
     private async UniTask LoadSceneAsync(string sceneName)
     {
         isLoading = true;
+        fadeImage.fillAmount = 0f;
 
-        await SceneManager.LoadSceneAsync(sceneName);
+        var handle = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
+        handle.allowSceneActivation = false;
 
-        //로딩 마무리 작업도 수행 로딩 넣으면 대기allow로 바꿔야됨
+        await StartFade();
+        await UniTask.Delay(200);
 
+        handle.allowSceneActivation = true;
         OnSceneLoad?.Invoke();
-
         isLoading = false;
+
+        await EndFade();
+    }
+
+    private async UniTask StartFade()
+    {
+        while (fadeImage.fillAmount < 0.99f)
+        {
+            await UniTask.NextFrame();
+
+            fadeImage.fillAmount = Mathf.Lerp(fadeImage.fillAmount, 1, fadeSpeed * Time.unscaledDeltaTime);
+        }
+
+        fadeImage.fillAmount = 1f;
+    }
+
+    private async UniTask EndFade()
+    {
+        while (fadeImage.fillAmount > 0.01f)
+        {
+            await UniTask.NextFrame();
+
+            fadeImage.fillAmount = Mathf.Lerp(fadeImage.fillAmount, 0, fadeSpeed * Time.unscaledDeltaTime);
+        }
+
+        fadeImage.fillAmount = 0f;
     }
 
     public void ReloadScene()
