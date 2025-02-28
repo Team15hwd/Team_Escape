@@ -121,7 +121,7 @@ WASD와 화살표 키를 사용하여 각 캐릭터를 조작하고, 서로의 �
 
 - https://github.com/Team15hwd/Team_Escape
 
-2. Unity에서 프로젝트를 열기 (권장 버전: 2022.3.17f1)
+2. Unity에서 프로젝트 열기 (권장 버전: 2022.3.17f1)
 
 3. Assets/Scenes/StartScene.unity를 실행하여 게임 시작!
 
