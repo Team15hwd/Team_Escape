@@ -45,80 +45,80 @@ WASD와 화살표 키를 사용하여 각 캐릭터를 조작하고, 서로의 �
 /Scripts
   ├── GamePlay
   
-  │   ├── StageInfo.cs 
+    │   ├── StageInfo.cs 
   
   ├── Objects
   
-  │   ├── DoorController.cs
+    │   ├── DoorController.cs
   
   ├── Physics
   
-  │   ├── ButtonFlag.cs  
+    │   ├── ButtonFlag.cs  
 
-  │   ├── Chain.cs     
+    │   ├── Chain.cs     
   
-  │   ├── CharacterController2D.cs  
+    │   ├── CharacterController2D.cs  
   
-  │   ├── LadderPlatform.cs 
+    │   ├── LadderPlatform.cs 
   
-  │   ├── MovingPlatform.cs 
+    │   ├── MovingPlatform.cs 
   
-  │   ├── Potal.cs 
+    │   ├── Potal.cs 
   
-  │   ├── Pulley.cs  
+    │   ├── Pulley.cs  
   
-  │   ├── PulleyManager.cs 
-  
-  │   ├── TriggerCollision.cs  
-  
-  │   ├── TriggerController.cs 
+    │   ├── PulleyManager.cs 
+    
+    │   ├── TriggerCollision.cs  
+    
+    │   ├── TriggerController.cs 
   
   ├── Player
   
-  │   ├── Player.cs  
+    │   ├── Player.cs  
   
   ├── Scene
   
-  │   ├── SceneLoader.cs  
+    │   ├── SceneLoader.cs  
   
-  │   ├── SceneLoadManager.cs  
+    │   ├── SceneLoadManager.cs  
   
   ├── Sound
   
-  │   ├── SoundBuilder.cs
+    │   ├── SoundBuilder.cs
   
-  │   ├── SoundData.cs  
+    │   ├── SoundData.cs  
   
-  │   ├── SoundEmitter.cs  
+    │   ├── SoundEmitter.cs  
   
-  │   ├── SoundManager.cs  
+    │   ├── SoundManager.cs  
   
-  │   ├── SoundPlay.cs  
+    │   ├── SoundPlay.cs  
   
-  │   ├── SoundSetting.cs  
+    │   ├── SoundSetting.cs  
   
   ├── UI
   
-  │   ├── ClearPanelUI.cs  
+    │   ├── ClearPanelUI.cs  
   
-  │   ├── FailPanelUI.cs 
+    │   ├── FailPanelUI.cs 
   
-  │   ├── GamePlayUI.cs 
+    │   ├── GamePlayUI.cs 
   
-  │   ├── RandomSprite.cs  
+    │   ├── RandomSprite.cs  
   
   ├── Utils
   
-  │   ├── Bootstrapper.cs  
+    │   ├── Bootstrapper.cs  
   
-  │   ├── VideoScene.cs
+    │   ├── VideoScene.cs
 
 ---
 ## 🛠️ **설치 및 실행 방법**
 
 1. 저장소 클론하기
 
-https://github.com/Team15hwd/Team_Escape
+  https://github.com/Team15hwd/Team_Escape
 
 2. Unity에서 프로젝트를 열기 (권장 버전: 2022.3.17f1)
 
