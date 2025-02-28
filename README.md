@@ -43,6 +43,7 @@ WASD와 화살표 키를 사용하여 각 캐릭터를 조작하고, 서로의 �
 
 ## ⚙ **시스템 구조**
 /Scripts
+
   ├── GamePlay
   
     │   ├── StageInfo.cs 
