@@ -252,6 +252,17 @@ MonoBehaviour:
     panStereo: 0
     spatialBlend: 0
     reverbZoneMix: 1
+  deadSFX:
+    clip: {fileID: 8300000, guid: 5c520ee00dcac154ba15d6cdce931c5c, type: 3}
+    outputMixerGroup: {fileID: 1770267706659360427, guid: db9e2b5412c56e8428c8d5395b6955d7, type: 2}
+    mute: 0
+    loop: 0
+    playOnAwake: 0
+    pitch: 1
+    volume: 1
+    panStereo: 0
+    spatialBlend: 0
+    reverbZoneMix: 1
   playerState: 0
 --- !u!96 &4834328131608410079
 TrailRenderer:

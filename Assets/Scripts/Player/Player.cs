@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpPower;
     [Header("SFX")]
     [SerializeField] private SoundData jumpSFX;
-
+    [SerializeField] private SoundData deadSFX;
 
     private UserInput input;
     private CharacterController2D controller;
@@ -33,7 +33,75 @@ public class Player : MonoBehaviour
 
     private bool isDead = false;
 
-    public event Action<bool> IsDead;
+    public void OnDead()
+    {
+        isDead = true;
+        gameObject.layer = isDead ? LayerMask.NameToLayer("Dead") : gameObject.layer;
+        controller.enabled = false;
+
+        CountdownTimer timer = new(1.5f);
+
+        timer.OnTimerStop += () => EventBus.Call<DeadEvent>(new DeadEvent());
+        timer.Start(true);
+
+        //SoundManager.Instance.Bulider().WidthSoundData(deadSFX).Play();
+    }
+
+    private bool IsOutOfCameraView()
+    {
+        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+
+        if (!GeometryUtility.TestPlanesAABB(planes, sprRenderer.bounds))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void Move(Vector2 direction)
+    {
+        controller.Move(direction * moveSpeed);
+    }
+
+    private void Jump()
+    {
+        if (controller.canJump && controller.IsGrounded)
+        {
+            controller.Jump(jumpPower);
+            SoundManager.Instance.Bulider().WidthSoundData(jumpSFX).Play();
+        }
+    }
+
+    private void UpdateState()
+    {
+        if (playerState == PlayerState.Dead)
+        {
+            PlayerState = PlayerState.Jump;
+            return;
+        }
+
+
+        if (controller.IsGrounded)
+        {
+            PlayerState = Mathf.Abs(controller.Velocity.x - controller.externalVelocity.x) > 0.1f ?
+                PlayerState.Move : PlayerState.Idle;
+        }
+        else
+        {
+            PlayerState = PlayerState.Jump;
+        }
+
+        if (Mathf.Abs(controller.Velocity.x) > 0.1f)
+        {
+            sprRenderer.flipX = controller.Velocity.x < 0 ? true : false;
+        }
+    }
+
+    private void InitInputActions()
+    {
+        input = new();
+    }
 
     void Awake()
     {
@@ -90,18 +158,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    private bool IsOutOfCameraView()
-    {
-        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
-
-        if (!GeometryUtility.TestPlanesAABB(planes, sprRenderer.bounds))
-        {
-            return true;
-        }
-
-        return false;
-    }
-
     void OnTriggerEnter2D(Collider2D collision)
     {
         string damageTag = tribe != PlayerTribe.Human ? "Oxygen" : "Exanova";
@@ -110,62 +166,6 @@ public class Player : MonoBehaviour
         {
             OnDead();
         }
-    }
-
-    private void Move(Vector2 direction)
-    {
-        controller.Move(direction * moveSpeed);
-    }
-
-    private void Jump()
-    {
-        if (controller.canJump && controller.IsGrounded)
-        {
-            controller.Jump(jumpPower);
-            SoundManager.Instance.Bulider().WidthSoundData(jumpSFX).Play();
-        }
-    }
-
-    public void OnDead()
-    {
-        isDead = true;
-        gameObject.layer = isDead ? LayerMask.NameToLayer("Dead") : gameObject.layer;
-        controller.enabled = false;
-
-        CountdownTimer timer = new(1.5f);
-
-        timer.OnTimerStop += () => EventBus.Call<DeadEvent>(new DeadEvent());
-        timer.Start(true);
-    }
-
-    private void UpdateState()
-    {
-        if (playerState == PlayerState.Dead)
-        {
-            PlayerState = PlayerState.Jump;
-            return;
-        }
-
-
-        if (controller.IsGrounded)
-        {
-            PlayerState = Mathf.Abs(controller.Velocity.x - controller.externalVelocity.x) > 0.1f ?
-                PlayerState.Move : PlayerState.Idle;
-        }
-        else
-        {
-            PlayerState = PlayerState.Jump;
-        }
-
-        if (Mathf.Abs(controller.Velocity.x) > 0.1f)
-        {
-            sprRenderer.flipX = controller.Velocity.x < 0 ? true : false;
-        }
-    }
-
-    private void InitInputActions()
-    {
-        input = new();
     }
 }
 

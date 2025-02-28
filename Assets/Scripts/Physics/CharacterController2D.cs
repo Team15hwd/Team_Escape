@@ -36,7 +36,6 @@ public class CharacterController2D : MonoBehaviour
     private bool isSteepSloped;
     private bool isBlocked;
     private bool isOutOfControl = false;
-    private bool isOutOfPhysics = false;
 
     public Vector2 Velocity => rid.velocity;
     public bool IsGrounded => isGrounded;
