@@ -128,12 +128,12 @@ WASD와 화살표 키를 사용하여 각 캐릭터를 조작하고, 서로의 �
 ---
 
 ## 🙋‍♀️ **팀원**
-**김주연** : 팀장, StoryScene, UI, TutorialMap & Map1
+**김주연** : 팀장, StoryScene, EndingScene, UI, TutorialMap & Map1
 
 **순현빈** : 시스템 설계 및 스켈레톤 코드 작성, 물리 엔진 구현
 
-**이 수** : SceneManager, SceneLoader, StoryScene, UI, CSS
+**이 수** : SceneManager, SceneLoader, StoryScene, EndingScene, UI, CSS
 
-**이동현** : Scene 전환, SettingSlider, CSS 애니메이션, Map3
+**이동현** : 스토리 작가, Scene 전환, SettingSlider, EndingScene 애니메이션, Map3
 
 **최종민** : 승강기 기능, Map2
