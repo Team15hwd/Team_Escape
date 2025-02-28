@@ -119,7 +119,7 @@ WASD와 화살표 키를 사용하여 각 캐릭터를 조작하고, 서로의 �
 
 1. 저장소 클론하기
 
-  https://github.com/Team15hwd/Team_Escape
+- https://github.com/Team15hwd/Team_Escape
 
 2. Unity에서 프로젝트를 열기 (권장 버전: 2022.3.17f1)
 
