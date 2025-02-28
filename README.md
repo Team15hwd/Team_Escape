@@ -44,39 +44,73 @@ WASD와 화살표 키를 사용하여 각 캐릭터를 조작하고, 서로의 �
 ## ⚙ **시스템 구조**
 /Scripts
   ├── GamePlay
-  │   ├── StageInfo.cs   
+  
+  │   ├── StageInfo.cs 
+  
   ├── Objects
+  
   │   ├── DoorController.cs
+  
   ├── Physics
+  
   │   ├── ButtonFlag.cs  
-  │   ├── Chain.cs           
-  │   ├── CharacterController2D.cs          
+
+  │   ├── Chain.cs     
+  
+  │   ├── CharacterController2D.cs  
+  
   │   ├── LadderPlatform.cs 
+  
   │   ├── MovingPlatform.cs 
+  
   │   ├── Potal.cs 
+  
   │   ├── Pulley.cs  
+  
   │   ├── PulleyManager.cs 
+  
   │   ├── TriggerCollision.cs  
-  │   ├── TriggerController.cs  
+  
+  │   ├── TriggerController.cs 
+  
   ├── Player
+  
   │   ├── Player.cs  
+  
   ├── Scene
+  
   │   ├── SceneLoader.cs  
+  
   │   ├── SceneLoadManager.cs  
+  
   ├── Sound
-  │   ├── SoundBuilder.cs  
+  
+  │   ├── SoundBuilder.cs
+  
   │   ├── SoundData.cs  
+  
   │   ├── SoundEmitter.cs  
+  
   │   ├── SoundManager.cs  
+  
   │   ├── SoundPlay.cs  
+  
   │   ├── SoundSetting.cs  
+  
   ├── UI
+  
   │   ├── ClearPanelUI.cs  
+  
   │   ├── FailPanelUI.cs 
+  
   │   ├── GamePlayUI.cs 
+  
   │   ├── RandomSprite.cs  
+  
   ├── Utils
+  
   │   ├── Bootstrapper.cs  
+  
   │   ├── VideoScene.cs
 
 ---
