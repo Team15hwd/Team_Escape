@@ -12,7 +12,7 @@ public class GamePlayUI : MonoBehaviour
 
     private StageInfo info;
 
-    void Start()
+    void OnEnable()
     {
         EventBus.Subscribe<ClearEvent>(StageClear);
         EventBus.Subscribe<DeadEvent>(StageFail);
@@ -21,11 +21,6 @@ public class GamePlayUI : MonoBehaviour
         failPannel.gameObject.SetActive(false);
 
         OnStage();
-    }
-
-    void OnDisable()
-    {
-        
     }
 
     void OnDestroy()
