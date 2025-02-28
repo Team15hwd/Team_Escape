@@ -10,11 +10,13 @@ public class ClearPanelUI : MonoBehaviour
     [SerializeField] private Button retryBtn;
     [SerializeField] private Button nextBtn;
     [SerializeField] private Button cutSceneBtn;
-    [SerializeField] private List<RectTransform> stars = new();
+    [SerializeField] private List<GameObject> stars = new();
 
     public void StageClear(StageInfo info)
     {
         float clearTime = info.WhatTime();
+
+        stars.ForEach(s => s.gameObject.SetActive(false));
 
         if (clearTime < info.PerpectClearTime)
         {
@@ -26,8 +28,8 @@ public class ClearPanelUI : MonoBehaviour
         else if (clearTime < info.NormalClearTime)
         {
             //별 두개
-            stars[0].gameObject.SetActive(true);
-            stars[2].gameObject.SetActive(true);
+            stars[0].SetActive(true);
+            stars[2].SetActive(true);
 
             nextBtn.gameObject.SetActive(true);
             retryBtn.gameObject.SetActive(true);

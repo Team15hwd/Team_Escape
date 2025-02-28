@@ -11,8 +11,9 @@ public class GamePlayUI : MonoBehaviour
     [SerializeField] private List<Image> timerFillImages = new();
 
     private StageInfo info;
+    private bool isClear = false;
 
-    void OnEnable()
+    void Start()
     {
         EventBus.Subscribe<ClearEvent>(StageClear);
         EventBus.Subscribe<DeadEvent>(StageFail);
@@ -31,6 +32,9 @@ public class GamePlayUI : MonoBehaviour
 
     void Update()
     {
+        if (isClear)
+            return;
+
         DisplayTimer();
     }
 
@@ -48,8 +52,8 @@ public class GamePlayUI : MonoBehaviour
         clearPanelUI.gameObject.SetActive(true);
         clearPanelUI.StageClear(info);
         clearPanelUI.LoadScene(() => clearEvent.sceneLoader.LoadScene());
-
-        timerFillImages.ForEach(s => s.fillAmount = 1f);
+        isClear = true;
+        //timerFillImages.ForEach(s => s.fillAmount = 1f);
     }
 
     private void StageFail(DeadEvent deadEvent)
